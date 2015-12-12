@@ -106,4 +106,22 @@ class CollectionExampleSpec extends FunSpec with Matchers {
 
   }
 
+  describe("working with Optional") {
+    // optional can be described as a potential List of only one element
+
+    it ("should show the behaviour of getOrElse") {
+      val maybeUser = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
+      User.getUserNameOrElse(maybeUser, defaultName = "Toto") shouldBe "Akira"
+      User.getUserNameOrElse(None, defaultName = "Toto") shouldBe "Toto"
+    }
+
+    it ("should use orElse") {
+      val maybeUser1 = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
+      val maybeUser2 = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
+      User.getUserOrElse(maybeUser1, None, maybeUser2) shouldBe maybeUser1
+      User.getUserOrElse(None, maybeUser2, None) shouldBe maybeUser2
+      User.getUserOrElse(None, None, maybeUser2) shouldBe maybeUser2
+      User.getUserOrElse(None, None, None) shouldBe None
+    }
+  }
 }
