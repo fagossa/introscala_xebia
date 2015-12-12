@@ -1,0 +1,1 @@
+This repo contains several exercises as an introduction to scala
