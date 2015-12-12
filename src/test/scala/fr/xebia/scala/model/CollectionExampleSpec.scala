@@ -2,10 +2,10 @@ package fr.xebia.scala.model
 
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
-import org.scalatest.FunSpec
+import org.scalatest.{Matchers, FunSpec}
 import org.scalatest.matchers.ShouldMatchers
 
-class CollectionExampleSpec extends FunSpec with ShouldMatchers {
+class CollectionExampleSpec extends FunSpec with Matchers {
 
   val ran = Film("Ran", 1985, Kurosawa, List(Action, Drama, War), 2.3)
   val rashomon = Film("Rashomon", 1950, Kurosawa, List(Crime, Drama), 3.0)
@@ -36,6 +36,14 @@ class CollectionExampleSpec extends FunSpec with ShouldMatchers {
     it("should use films List#filter and high order functions") {
       // when
       val filmFilter = Film.filterFilmsUsingFilter(completeList) _
+      // then
+      filmFilter(_.director == Hitchcock) shouldBe hitchcockFilms
+      filmFilter(_.director == Kurosawa) shouldBe kurosawaFilms
+    }
+
+    it("should use films Collection#filter and high order functions") {
+      // when
+      val filmFilter = Film.filterFilmsUsingFilter2(completeList) _
       // then
       filmFilter(_.director == Hitchcock) shouldBe hitchcockFilms
       filmFilter(_.director == Kurosawa) shouldBe kurosawaFilms

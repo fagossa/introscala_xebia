@@ -30,6 +30,10 @@ object Film {
   def filterFilmsUsingFilter(films: List[Film])(withCustomFilter: Film => Boolean): List[Film] =
     films.filter(withCustomFilter)
 
+  // Note: use Collection#filter
+  def filterFilmsUsingFilter2(films: List[Film])(withCustomFilter: Film => Boolean): List[Film] =
+    Collection.filter(films, withCustomFilter)
+
   def filterFilmsUsingMultipleFilter(films: List[Film])(withCustomFilter: List[Film => Boolean]): List[Film] =
     withCustomFilter match {
       case Nil => films
@@ -57,7 +61,7 @@ object Film {
     if (films.size == qty.size) {
       Some {
         Collection.zip(films, qty)
-          .map { case (film, price) => film.price * price}
+          .map { case (film, amt) => film.price * amt}
           .sum
       }
     } else {
@@ -77,6 +81,15 @@ object Film {
 }
 
 object Collection {
+
+  /**
+   * remove elements from list if they don't pass the predicate specified
+   */
+  def filter[A](list: List[A], withFilter: A => Boolean): List[A] = list match {
+    case Nil => Nil
+    case h :: t if withFilter(h) => List(h) ++ filter(t, withFilter)
+    case h :: t => filter(t, withFilter)
+  }
 
   /**
    * creates a tuple from each pair of elements
