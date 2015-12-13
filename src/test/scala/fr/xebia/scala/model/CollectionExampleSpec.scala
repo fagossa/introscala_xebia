@@ -68,6 +68,15 @@ class CollectionExampleSpec extends FunSpec with Matchers {
       Film.sumPricesWithRecursion(kurosawaFilms) shouldBe 5.3
     }
 
+    it("should use pattern matching") {
+      val film1 = Film("Videodrome", 1984, RandomDirector, List(Horror), 9)
+      val film2 = Film("Donnie Darko", 2002, RandomDirector, List(Drama, SciFi), 10)
+      val film3 = Film("The Adventures of Baron Munchausen", 1989, RandomDirector, List(Comedy), 15)
+      val film4 = Film("Brazil", 1985, RandomDirector, List(SciFi), 2)
+      val discountFilms = film1 :: film2 :: film3 :: film4 :: Nil
+      Film.discounts(discountFilms) shouldBe List(3.15, 4.0, 7.5, 2.0)
+    }
+
     it("should use folding to sum film prices") {
       Film.sumPricesWithFolding(hitchcockFilms) shouldBe 7.8
       Film.sumPricesWithFolding(kurosawaFilms) shouldBe 5.3
@@ -150,6 +159,10 @@ class CollectionExampleSpec extends FunSpec with Matchers {
       // but as the result is also an Option then we are :(
       // So, lets try again :D
       User.getBetterGenderFromUserId(1) shouldBe Some("M")
+      // we could also use a for-comprehension
+      User.getGenderFromUserIdSugared(1) shouldBe Some("M")
+      User.getGenderFromUserIdSugared(2) shouldBe None
+      User.getAllGenders shouldBe Seq("M", "F")
     }
   }
 }

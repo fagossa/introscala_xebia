@@ -36,4 +36,12 @@ object Genre {
     override def toString: String = "Mistery"
   }
 
+  object Comedy extends Genre {
+    override def toString: String = "Comedy"
+  }
+
+  object SciFi extends Genre {
+    override def toString: String = "Sci-Fi"
+  }
+
 }

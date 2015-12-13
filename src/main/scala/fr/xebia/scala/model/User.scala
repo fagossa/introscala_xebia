@@ -24,10 +24,14 @@ object User {
    * UserOptions#orElse
    */
   def getUserOrElse(firstOption: Option[User], secondOption: Option[User], thirdOption: Option[User]): Option[User] =
-    orElse(orElse(firstOption, secondOption), thirdOption)
+    orElse(
+      orElse(firstOption, secondOption),
+      thirdOption)
 
   def getUserNameOrElse(someUser: Option[User], defaultName: String) =
-    someUser.map(_.firstName).getOrElse(defaultName)
+    someUser
+      .map(_.firstName)
+      .getOrElse(defaultName)
 
   // Note:
   // Use Option#filter
@@ -60,6 +64,21 @@ object User {
   // - use UserOptions#flatMap
   def getBetterGenderFromUserId(id: Int): Option[String] =
     flatMap(UserRepository.findById(id))((u) => u.gender)
+
+  // Note: Use for-comprehension; we can't actually test if you
+  // use it or not, but for the sake of the exercise please use it :)
+  def getGenderFromUserIdSugared(id: Int): Option[String] =
+    for {
+      user <- UserRepository.findById(id)
+      gender <- user.gender
+    } yield gender
+
+  // Note: for-comprehension + Traversable#toSeq
+  def getAllGenders: Seq[String] =
+    (for {
+      users <- UserRepository.findAll
+      genders <- users.gender
+    } yield genders).toSeq
 
 }
 
@@ -102,8 +121,11 @@ object UserOptions {
 }
 
 object UserRepository {
-  private val users = Map(1 -> User(1, "John", "Doe", 32, Some("M")),
-    2 -> User(2, "Johanna", "Doe", 30, None))
+  private val users = Map(
+    1 -> User(1, "John", "Doe", 32, Some("M")),
+    2 -> User(2, "Johanna", "Doe", 30, None),
+    3 -> User(2, "Johanna", "Janitor", 27, Some("F"))
+  )
 
   def findById(id: Int): Option[User] = users.get(id)
 
