@@ -11,7 +11,9 @@ scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-json" % "2.3.4",
-  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
+  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
+  "org.spire-math" %% "cats" % "0.3.0",
+  "org.scalaz" %% "scalaz-core" % "7.1.0"
 )
 
 resolvers += "typesafe_snapshots" at "http://repo.akka.io/snapshots"

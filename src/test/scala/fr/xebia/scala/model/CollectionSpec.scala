@@ -1,11 +1,12 @@
 package fr.xebia.scala.model
 
+import fr.xebia.scala.control.CollectionTools
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
 import org.scalatest.{Matchers, FunSpec}
 import org.scalatest.matchers.ShouldMatchers
 
-class CollectionExampleSpec extends FunSpec with Matchers {
+class CollectionSpec extends FunSpec with Matchers {
 
   val ran = Film("Ran", 1985, Kurosawa, List(Action, Drama, War), 2.3)
   val rashomon = Film("Rashomon", 1950, Kurosawa, List(Crime, Drama), 3.0)
@@ -57,6 +58,7 @@ class CollectionExampleSpec extends FunSpec with Matchers {
         _.director == Hitchcock,
         _.price > 3
       )) shouldBe List(vertigo)
+
       filmFilter(List(
         _.director == Kurosawa,
         _.price < 2.4
@@ -89,9 +91,9 @@ class CollectionExampleSpec extends FunSpec with Matchers {
     }
 
     it("should implement films zip with List") {
-      Collection.zip(List.empty[Film], List(3, 5)) shouldBe Nil
-      Collection.zip(kurosawaFilms, List.empty) shouldBe Nil
-      Collection.zip(kurosawaFilms, List(3, 5)) shouldBe List(
+      CollectionTools.zip(List.empty[Film], List(3, 5)) shouldBe Nil
+      CollectionTools.zip(kurosawaFilms, List.empty) shouldBe Nil
+      CollectionTools.zip(kurosawaFilms, List(3, 5)) shouldBe List(
         (ran, 3),
         (rashomon, 5)
       )
@@ -108,61 +110,11 @@ class CollectionExampleSpec extends FunSpec with Matchers {
 
 
     it("should implement fill method") {
-      Collection.fillList(0)(ran) shouldBe Nil
-      Collection.fillList(1)(ran) shouldBe List(ran)
-      Collection.fillList(3)(ran) shouldBe List(ran, ran, ran)
+      CollectionTools.fillList(0)(ran) shouldBe Nil
+      CollectionTools.fillList(1)(ran) shouldBe List(ran)
+      CollectionTools.fillList(3)(ran) shouldBe List(ran, ran, ran)
     }
 
   }
 
-  describe("working with Optional") {
-    // optional can be described as a potential List of only one element
-
-    it ("should show the behaviour of getOrElse") {
-      val maybeUser = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
-      User.getUserNameOrElse(maybeUser, defaultName = "Toto") shouldBe "Akira"
-      User.getUserNameOrElse(None, defaultName = "Toto") shouldBe "Toto"
-    }
-
-    it ("should use orElse") {
-      val maybeUser1 = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
-      val maybeUser2 = Some(User(2, "Akira", "Toriyama", 55, Some("M")))
-      User.getUserOrElse(maybeUser1, None, maybeUser2) shouldBe maybeUser1
-      User.getUserOrElse(None, maybeUser2, None) shouldBe maybeUser2
-      User.getUserOrElse(None, None, maybeUser2) shouldBe maybeUser2
-      User.getUserOrElse(None, None, None) shouldBe None
-    }
-
-    it ("should use filter") {
-      val user1 = User(2, "Christina", "Lawrence", 26, Some("F"))
-      val user2 = User(2, "Angelina", "Jolie", 25, Some("F"))
-      val user3 = User(2, "Jennifer", "Lawrence", 25, Some("F"))
-      val user4 = User(2, "Scarlett", "Lawrence", 25, None)
-      User.validUser(user1) shouldBe None
-      User.validUser(user2) shouldBe None
-      User.validUser(user3) shouldBe Some(user3)
-      User.validUser(user4) shouldBe None
-    }
-
-    it ("should use pattern matching") {
-      val user1 = User(2, "Scarlett", "Johansson", 31, Some("F"))
-      val user2 = User(2, "Michael", "Fassbender", 38, Some("M"))
-      val user3 = User(2, "Titi", "Tata", 25, None)
-      User.translateGender(user1) shouldBe User.Female
-      User.translateGender(user2) shouldBe User.Male
-      User.translateGender(user3) shouldBe User.NotSpecified
-    }
-
-    it ("should use 'Option#map' and 'Option#flatMap'") {
-      // Our first approach could be to simply map the result
-      User.getNaiveGenderFromUserId(1) shouldBe Some(Some("M"))
-      // but as the result is also an Option then we are :(
-      // So, lets try again :D
-      User.getBetterGenderFromUserId(1) shouldBe Some("M")
-      // we could also use a for-comprehension
-      User.getGenderFromUserIdSugared(1) shouldBe Some("M")
-      User.getGenderFromUserIdSugared(2) shouldBe None
-      User.getAllGenders shouldBe Seq("M", "F")
-    }
-  }
 }
