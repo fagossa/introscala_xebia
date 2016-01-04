@@ -3,19 +3,9 @@ package fr.xebia.scala.model
 import fr.xebia.scala.control.CollectionTools
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
-import org.scalatest.{Matchers, FunSpec}
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{FunSpec, Matchers}
 
-class CollectionSpec extends FunSpec with Matchers {
-
-  val ran = Film("Ran", 1985, Kurosawa, List(Action, Drama, War), 2.3)
-  val rashomon = Film("Rashomon", 1950, Kurosawa, List(Crime, Drama), 3.0)
-  val psyco = Film("Psycho", 1960, Hitchcock, List(Horror, Mistery, Thriller), 2.7)
-  val vertigo = Film("Vertigo", 1958, Hitchcock, List(Mistery, Romance, Thriller), 5.1)
-
-  val completeList = List(ran, rashomon, psyco, vertigo)
-  val hitchcockFilms = List(psyco, vertigo)
-  val kurosawaFilms = List(ran, rashomon)
+class CollectionSpec extends FunSpec with MockFilmData with Matchers {
 
   describe("several utilitary methods in List") {
 
@@ -85,9 +75,9 @@ class CollectionSpec extends FunSpec with Matchers {
     }
 
     it("should use films List#zip") {
-      Film.calculateTotalPrice(List.empty[Film], List(3, 5)) shouldBe None
-      Film.calculateTotalPrice(kurosawaFilms, List.empty) shouldBe None
-      Film.calculateTotalPrice(kurosawaFilms, List(3, 5)) shouldBe Some(21.9)
+      PriceCalculations.calculateTotalPrice(List.empty[Film], List(3, 5)) shouldBe None
+      PriceCalculations.calculateTotalPrice(kurosawaFilms, List.empty) shouldBe None
+      PriceCalculations.calculateTotalPrice(kurosawaFilms, List(3, 5)) shouldBe Some(21.9)
     }
 
     it("should implement films zip with List") {
@@ -98,16 +88,6 @@ class CollectionSpec extends FunSpec with Matchers {
         (rashomon, 5)
       )
     }
-
-    it("should implement get total prices with index") {
-      Film.calculateTotalPriceWithIndex(List.empty[Film], List(3, 5)) shouldBe None
-      Film.calculateTotalPriceWithIndex(kurosawaFilms, List.empty) shouldBe None
-      Film.calculateTotalPriceWithIndex(kurosawaFilms, List(2, 5)) shouldBe Some(List(
-        (0, 4.6),
-        (1, 15)
-      ))
-    }
-
 
     it("should implement fill method") {
       CollectionTools.fillList(0)(ran) shouldBe Nil

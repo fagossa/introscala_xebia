@@ -2,10 +2,18 @@ package fr.xebia.scala.model
 
 import org.scalatest.{Matchers, FunSpec}
 
-class OptionalSpec extends FunSpec with Matchers {
+class OptionalSpec extends FunSpec with MockFilmData with Matchers {
 
   describe("working with Optional") {
-    // optional can be described as a potential List of only one element
+
+    it("should implement get total prices with index") {
+      PriceCalculations.calculateTotalPriceWithIndex(List.empty[Film], List(3, 5)) shouldBe None
+      PriceCalculations.calculateTotalPriceWithIndex(kurosawaFilms, List.empty) shouldBe None
+      PriceCalculations.calculateTotalPriceWithIndex(kurosawaFilms, List(2, 5)) shouldBe Some(List(
+        (0, 4.6),
+        (1, 15)
+      ))
+    }
 
     it ("should show the behaviour of getOrElse") {
       val maybeUser = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))

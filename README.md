@@ -30,7 +30,22 @@ The easiest way to handle those cases is by using a pattern matching on the list
         head + sum(tail) 
     }
 
+# Currying
 
+
+## Currifying an existing function
+
+Lets imagine that we have the following function
+
+    val sum: (Int, Int) => Int = _ + _
+    
+    val result sum(1, 2) // result should be 3
+
+But we split the parameters in order to reuse the first block. By using `curried` we can transform an existing 
+function into a `curried function`. So, by doing this
+
+    val sumCurried = sum.curried
+    val result = sumCurried(1)(2) // result should be 3
 
 
 # Validating data
