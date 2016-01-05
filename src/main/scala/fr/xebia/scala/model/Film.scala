@@ -115,8 +115,13 @@ object Film {
   /*
    * Delete duplicate consecutive numbers
    */
-  def deleteConsecutiveDuplicates(allFilms: List[Film]): List[Film] = {
-    ???
-  }
+  def deleteConsecutiveDuplicates(allFilms: List[Film]): List[Film] =
+    allFilms.foldLeft(List.empty[Film])((acc, next) =>
+      if (acc.contains(next)) {
+        acc
+      } else {
+        acc ++ List(next)
+      }
+    )
 
 }
