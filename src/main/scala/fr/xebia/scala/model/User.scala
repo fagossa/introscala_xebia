@@ -1,6 +1,7 @@
 package fr.xebia.scala.model
 
-import fr.xebia.scala.model.UserOptions._
+import fr.xebia.scala.model.Gender.{NotSpecified, Female, Male}
+import fr.xebia.scala.control.UserOptions._
 
 case class User(
                  id: Int,
@@ -9,17 +10,24 @@ case class User(
                  age: Int,
                  gender: Option[String])
 
-object User {
+sealed trait Gender
 
-  sealed trait Gender
+object Gender {
 
   object Female extends Gender
 
   object Male extends Gender
 
   object NotSpecified extends Gender
+}
 
-  /**
+object User {
+
+  /**************************************
+    * Using optionals
+    **************************************/
+
+  /*
    * Return the first Option not empty from the list specified using the function
    * UserOptions#orElse
    */
@@ -28,17 +36,22 @@ object User {
       orElse(firstOption, secondOption),
       thirdOption)
 
+  /*
+   * If the user specified is present the his/her name, otherwise use the default value
+   */
   def getUserNameOrElse(someUser: Option[User], defaultName: String) =
     someUser
       .map(_.firstName)
       .getOrElse(defaultName)
 
-  // Note:
-  // Use Option#filter
-  // valid user means the following criteria:
-  //   - age <= 25
-  //   - called Lawrence
-  //   - with a specified gender
+  /*
+   * valid user means the following criteria:
+   *   - age <= 25
+   *   - called "Lawrence"
+   *   - with a specified gender
+   * Note:
+   *   Use Option#filter
+   */
   def validUser(user: User): Option[User] = {
     Some(user)
       .filter(_.age <= 25)
@@ -46,7 +59,13 @@ object User {
       .filter(_.gender.isDefined)
   }
 
-  // Note: user pattern matching
+  /*
+   * Follow this instructions to translate the gender:
+   *  - Female if gender is "F"
+   *  - Male if gender is "M"
+   *  - NotSpecified otherwise
+   * Note: user pattern matching
+   */
   def translateGender(user: User): Gender = user.gender match {
     case Some(gender) if gender == "F" => Female
     case Some(gender) if gender == "M" => Male
@@ -65,15 +84,26 @@ object User {
   def getBetterGenderFromUserId(id: Int): Option[String] =
     flatMap(UserRepository.findById(id))((u) => u.gender)
 
-  // Note: Use for-comprehension; we can't actually test if you
-  // use it or not, but for the sake of the exercise please use it :)
+
+
+  /**************************************
+   * Syntax sugar with for-comprehension
+   **************************************/
+
+  /*
+   * Note: Use for-comprehension; we can't actually test if you
+   * use it or not, but for the sake of the exercise please use it :)
+   */
   def getGenderFromUserIdSugared(id: Int): Option[String] =
     for {
       user <- UserRepository.findById(id)
       gender <- user.gender
     } yield gender
 
-  // Note: for-comprehension + Traversable#toSeq
+  /*
+   * Get genders from UserRepository#findAll
+   * Note: for-comprehension + Traversable#toSeq
+   */
   def getAllGenders: Seq[String] =
     (for {
       users <- UserRepository.findAll
@@ -82,45 +112,8 @@ object User {
 
 }
 
-object UserOptions {
-
-  /**
-   * apply the mapper function to the option specified and wrap the
-   * result
-   */
-  def map[A, B](maybe: Option[A])(mapper: A => B): Option[B] = {
-    if (maybe.isDefined) {
-      Some(mapper(maybe.get))
-    } else {
-      None
-    }
-  }
-
-  /**
-   * apply the mapper function to the option specified
-   */
-  def flatMap[A, B](maybe: Option[A])(mapper: A => Option[B]): Option[B] = {
-    if (maybe.isDefined) {
-      mapper(maybe.get)
-    } else {
-      None
-    }
-  }
-
-
-  /**
-   * if the first parameter is None return the second
-   */
-  def orElse[A](firstOption: Option[A], secondOption: Option[A]): Option[A] =
-    if (firstOption.isDefined) {
-      firstOption
-    } else {
-      secondOption
-    }
-
-}
-
 object UserRepository {
+
   private val users = Map(
     1 -> User(1, "John", "Doe", 32, Some("M")),
     2 -> User(2, "Johanna", "Doe", 30, None),
@@ -130,4 +123,5 @@ object UserRepository {
   def findById(id: Int): Option[User] = users.get(id)
 
   def findAll = users.values
+
 }

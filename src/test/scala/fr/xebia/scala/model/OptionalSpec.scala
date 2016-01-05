@@ -1,5 +1,6 @@
 package fr.xebia.scala.model
 
+import fr.xebia.scala.model.Gender.{NotSpecified, Male, Female}
 import org.scalatest.{Matchers, FunSpec}
 
 class OptionalSpec extends FunSpec with MockFilmData with Matchers {
@@ -45,9 +46,9 @@ class OptionalSpec extends FunSpec with MockFilmData with Matchers {
       val user1 = User(2, "Scarlett", "Johansson", 31, Some("F"))
       val user2 = User(2, "Michael", "Fassbender", 38, Some("M"))
       val user3 = User(2, "Titi", "Tata", 25, None)
-      User.translateGender(user1) shouldBe User.Female
-      User.translateGender(user2) shouldBe User.Male
-      User.translateGender(user3) shouldBe User.NotSpecified
+      User.translateGender(user1) shouldBe Female
+      User.translateGender(user2) shouldBe Male
+      User.translateGender(user3) shouldBe NotSpecified
     }
 
     it ("should use 'Option#map' and 'Option#flatMap'") {
