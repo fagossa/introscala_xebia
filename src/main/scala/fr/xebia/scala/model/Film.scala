@@ -112,38 +112,11 @@ object Film {
   def sumPricesWithFolding(films: List[Film]): Double =
     films.foldLeft(0d)((r, c) => r + c.price)
 
-}
-
-object PriceCalculations {
-
   /*
-   * Calculate the totalPrice of the list specified only if the film list size is equal to the prices list
-   *
-   * Note: use CollectionTools#zip[A,B](List[A], List[B]):(A,B)
+   * Delete duplicate consecutive numbers
    */
-  def calculateTotalPrice(films: List[Film], qty: List[Int]): Option[Double] =
-    if (films.size == qty.size) {
-      Some {
-        CollectionTools.zip(films, qty)
-          .map { case (film, amt) => film.price * amt }
-          .sum
-      }
-    } else {
-      None
-    }
+  def deleteConsecutiveDuplicates(allFilms: List[Film]): List[Film] = {
+    ???
+  }
 
-  /*
-   * Return the total price and the index on the ranking only if the film list size is equal to the prices list
-   *
-   * Note: use CollectionTools#zipWithIndex[A](List[A]):(A, Int)
-   */
-  def calculateTotalPriceWithIndex(films: List[Film], qty: List[Int]): Option[List[(Int, Double)]] =
-    if (films.size == qty.size) {
-      Some {
-        CollectionTools.zipWithIndex(CollectionTools.zip(films, qty))
-          .map { case ((f: Film, qty: Int), index) => (index, f.price * qty) }
-      }
-    } else {
-      None
-    }
 }

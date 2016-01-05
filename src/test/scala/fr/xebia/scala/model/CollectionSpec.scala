@@ -1,6 +1,6 @@
 package fr.xebia.scala.model
 
-import fr.xebia.scala.control.CollectionTools
+import fr.xebia.scala.control.{PriceCalculations, CollectionTools}
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
 import org.scalatest.{FunSpec, Matchers}
@@ -74,6 +74,9 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
       Film.sumPricesWithFolding(kurosawaFilms) shouldBe 5.3
     }
 
+  }
+
+  describe("several utilitary methods in List reimplemented") {
     it("should use films List#zip") {
       PriceCalculations.calculateTotalPrice(List.empty[Film], List(3, 5)) shouldBe None
       PriceCalculations.calculateTotalPrice(kurosawaFilms, List.empty) shouldBe None
@@ -95,6 +98,13 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
       CollectionTools.fillList(3)(ran) shouldBe List(ran, ran, ran)
     }
 
+    it("should delete consecutive duplicates") {
+      Film.deleteConsecutiveDuplicates(Nil) shouldBe Nil
+      Film.deleteConsecutiveDuplicates(List(ran)) shouldBe List(ran)
+      Film.deleteConsecutiveDuplicates(List(ran, rashomon)) shouldBe List(ran, rashomon)
+      Film.deleteConsecutiveDuplicates(List(ran, rashomon, rashomon)) shouldBe List(ran, rashomon)
+      Film.deleteConsecutiveDuplicates(List(ran, ran, rashomon, rashomon)) shouldBe List(ran, rashomon)
+    }
   }
 
 }

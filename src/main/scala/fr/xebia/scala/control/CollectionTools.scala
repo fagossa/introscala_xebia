@@ -52,4 +52,5 @@ object CollectionTools {
     }
     go(List(element), 1)
   }
+
 }

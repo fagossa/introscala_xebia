@@ -1,5 +1,6 @@
 package fr.xebia.scala.model
 
+import fr.xebia.scala.control.PriceCalculations
 import fr.xebia.scala.model.Gender.{NotSpecified, Male, Female}
 import org.scalatest.{Matchers, FunSpec}
 
