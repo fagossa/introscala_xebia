@@ -22,6 +22,14 @@ object Director {
     override def toString: String = "Hitchcock"
   }
 
+  object Spielberg extends Director {
+    override def toString: String = "Spielberg"
+  }
+
+  object Kubrick extends Director {
+    override def toString: String = "Kubrick"
+  }
+
   object RandomDirector extends Director {
     override def toString: String = "does_not_matter"
   }
