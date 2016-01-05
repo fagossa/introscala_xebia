@@ -2,8 +2,7 @@ package fr.xebia.scala.model
 
 import fr.xebia.scala.control.EventualFuture
 import fr.xebia.scala.model.Genre.War
-import org.scalatest.concurrent.{ScalaFutures, Futures, Eventually}
-import org.scalatest.concurrent.PatienceConfiguration.{Interval, Timeout}
+import org.scalatest.concurrent.{Futures, ScalaFutures}
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{FunSpec, Matchers}
 
@@ -20,22 +19,50 @@ with Matchers with Futures {
 
   describe("several methods using futures") {
 
-    it("should use Future#sequence") {
-      // when
-      val movieIds = List(1, 2, 5)
-      val films: Future[List[Film]] = EventualFuture.findMoviesByGenreAndId(War, movieIds)
+    /*
+     * Note: 'whenReady' is a simple way to wait until the future completes
+     */
 
+    it("should use basic futures") {
+      ScalaFutures.whenReady(EventualFuture.getFilmNameById(1)) { response =>
+        response shouldBe Some("Saving Private Ryan")
+      }
+      ScalaFutures.whenReady(EventualFuture.getFilmNameById(9)) { response =>
+        response shouldBe None
+      }
+    }
+
+    it("should operates on values inside futures") {
+      ScalaFutures.whenReady(EventualFuture.sumFilmsPricesById(List(1, 2))) {
+        _ shouldBe 6.8
+      }
+    }
+
+    it("should use Future#fold") {
+      val eventualValues = List(
+        Future.successful(1.1),
+        Future.successful(2.2),
+        Future.successful(3.3)
+      )
+      ScalaFutures.whenReady(EventualFuture.sumEventualPrices(eventualValues)) {
+        _ shouldBe 6.6
+      }
+    }
+
+    it("should use Future#sequence") {
+      // given
+      val movieIds = List(1, 2, 5)
       val expectedFilms = List(
         FilmRepository.films.get(1),
         FilmRepository.films.get(2)
       ).flatten
 
-      /*
-       * whenReady is a simple way to wait until the future completes
-       */
-      ScalaFutures.whenReady(films) { actualList =>
-        // run assertions against the object returned in the future
-        actualList should be(expectedFilms)
+      // when
+      val films: Future[List[Film]] =
+        EventualFuture.findMoviesByGenreAndId(War, movieIds)
+
+      ScalaFutures.whenReady(films) {
+        _ should be(expectedFilms)
       }
     }
 
