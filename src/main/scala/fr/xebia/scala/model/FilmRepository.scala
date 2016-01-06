@@ -23,6 +23,11 @@ object FilmRepository {
       films.get(id)
     }
 
+  def findByIdOrFail(id: Int)(implicit ex: ExecutionContext): Future[Film] =
+    Future {
+      films.getOrElse(id, throw new IllegalArgumentException("Error: Unknown film"))
+    }
+
   def findAll: Future[List[Film]] =
     Future.successful(films.values.toList)
 

@@ -53,7 +53,7 @@ function into a `curried function`. So, by doing this
 We included different examples that hopefully will help you to identify the advantages/disadvantages from the following
 equivalent alternatives:
 
-* Either
+* Either`
 
 * Cats `Xor`
 

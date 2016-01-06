@@ -2,14 +2,14 @@ package fr.xebia.scala.model
 
 import fr.xebia.scala.control.EventualFuture
 import fr.xebia.scala.model.Genre.War
-import org.scalatest.concurrent.{Futures, ScalaFutures}
+import org.scalatest.concurrent.{Eventually, Futures, ScalaFutures}
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{FunSpec, Matchers}
 
-import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class FutureSpec extends FunSpec with MockFilmData
-with Matchers with Futures {
+with Matchers with Futures with Eventually {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -19,16 +19,41 @@ with Matchers with Futures {
 
   describe("several methods using futures") {
 
+    import scala.concurrent._
+    import scala.concurrent.duration._
+
     /*
      * Note: 'whenReady' is a simple way to wait until the future completes
      */
-
     it("should use basic futures") {
       ScalaFutures.whenReady(EventualFuture.getFilmNameById(1)) { response =>
         response shouldBe Some("Saving Private Ryan")
       }
       ScalaFutures.whenReady(EventualFuture.getFilmNameById(9)) { response =>
         response shouldBe None
+      }
+    }
+
+    /*
+     * Note: 'eventually' is loop that allow us to execute a pice of code several
+     * times until we get a timeout
+     */
+    it("should handle the results of futures") {
+      val successResponse = EventualFuture.getEventualFilmById(1)
+      eventually(timeout(scaled(1 seconds))) {
+        successResponse.onSuccess {
+          case film => film shouldBe FilmRepository.films.get(1).get
+        }
+        successResponse.onFailure {
+          case error: Error => fail(error.getMessage)
+        }
+      }
+      val failingResponse = EventualFuture.getEventualFilmById(6)
+      eventually(timeout(scaled(2 seconds))) {
+        failingResponse.onComplete {
+          case Success(film) => fail(s"this should not happen->$film")
+          case Failure(error) => info(s"We got a '${error.getMessage}'. No problemo ;)")
+        }
       }
     }
 
@@ -66,39 +91,41 @@ with Matchers with Futures {
       }
     }
 
+    it("should get 4 durations of 1 second created with different techniques") {
+      EventualFuture.get4DurationsOfTenSeconds shouldBe List.fill(4)(10 seconds)
+    }
+
+    /*
+     * Note: 'Await.result' blocks the current execution thread until timeout
+     */
     it("should execute the futures in a concurrent way") {
-      import scala.concurrent._
-      import scala.concurrent.duration._
       // given
       val firstFilmId = 1
       val secondFilmId = 2
       val thirdFilmId = 3
-      val duration = 1 second // We block the execution thread during this value
+      val duration = 1 second
 
       // when
-      val eventualSum = EventualFuture.eventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
+      val eventualSum = EventualFuture.eventualSumFromMovieIds(firstFilmId, secondFilmId, thirdFilmId)
 
       // then
       Await.result(eventualSum, duration) shouldBe 9.5
     }
 
     it("should execute the futures in a concurrent way handling timeouts") {
-      import scala.concurrent._
-      import scala.concurrent.duration._
       // given
       val firstFilmId = 1
       val secondFilmId = 2
       val thirdFilmId = 3
       val duration = 2 seconds
 
-      intercept [java.util.concurrent.TimeoutException] {
+      intercept[java.util.concurrent.TimeoutException] {
         // when
-        //EventualFuture.slowEventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
         val eventualSum = EventualFuture.slowEventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
+        // then
         Await.result(eventualSum, duration) shouldBe 9.5
       }
     }
-
 
   }
 
