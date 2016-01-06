@@ -66,6 +66,40 @@ with Matchers with Futures {
       }
     }
 
+    it("should execute the futures in a concurrent way") {
+      import scala.concurrent._
+      import scala.concurrent.duration._
+      // given
+      val firstFilmId = 1
+      val secondFilmId = 2
+      val thirdFilmId = 3
+      val duration = 1 second // We block the execution thread during this value
+
+      // when
+      val eventualSum = EventualFuture.eventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
+
+      // then
+      Await.result(eventualSum, duration) shouldBe 9.5
+    }
+
+    it("should execute the futures in a concurrent way handling timeouts") {
+      import scala.concurrent._
+      import scala.concurrent.duration._
+      // given
+      val firstFilmId = 1
+      val secondFilmId = 2
+      val thirdFilmId = 3
+      val duration = 2 seconds
+
+      intercept [java.util.concurrent.TimeoutException] {
+        // when
+        //EventualFuture.slowEventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
+        val eventualSum = EventualFuture.slowEventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
+        Await.result(eventualSum, duration) shouldBe 9.5
+      }
+    }
+
+
   }
 
 }

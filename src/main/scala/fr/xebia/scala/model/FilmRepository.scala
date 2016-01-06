@@ -3,7 +3,7 @@ package fr.xebia.scala.model
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object FilmRepository {
 
@@ -16,6 +16,12 @@ object FilmRepository {
 
   def findById(id: Int): Future[Option[Film]] =
     Future.successful(films.get(id))
+
+  def slowFindById(id: Int)(implicit ex: ExecutionContext): Future[Option[Film]] =
+    Future {
+      Thread.sleep(1000)
+      films.get(id)
+    }
 
   def findAll: Future[List[Film]] =
     Future.successful(films.values.toList)
