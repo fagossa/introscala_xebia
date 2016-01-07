@@ -40,7 +40,7 @@ object EventualFuture {
    *
    * Note:
    *  - Use FilmRepository#findById to retrieve the film
-   *  - Use Future.sequence for List[Future] to Future[List]
+   *  - Use Future#sequence for List[Future] to Future[List]
    */
   def sumFilmsPricesById(list: List[Int])(implicit ex: ExecutionContext): Future[Double] =
     Future.sequence(
@@ -62,7 +62,7 @@ object EventualFuture {
    *
    * Note:
    *  - Use FilmRepository#findById to retrieve each film
-   *  - Use Future.sequence for List[Future] to Future[List]
+   *  - Use Future#sequence for List[Future] to Future[List]
    */
   def findMoviesByGenreAndId(genre: Genre, movies: List[Int])(implicit ex: ExecutionContext): Future[List[Film]] = {
     Future.sequence(
