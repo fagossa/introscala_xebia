@@ -1,14 +1,14 @@
-package fr.xebia.scala.model
+package fr.xebia.scala
 
-import fr.xebia.scala.control.EventualFuture
 import fr.xebia.scala.model.Genre.War
+import fr.xebia.scala.model.{FilmRepository, Film, MockFilmData}
 import org.scalatest.concurrent.{Eventually, Futures, ScalaFutures}
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{FunSpec, Matchers}
 
 import scala.util.{Failure, Success}
 
-class FutureSpec extends FunSpec with MockFilmData
+class Step8_FutureSpec extends FunSpec with MockFilmData
 with Matchers with Futures with Eventually {
 
   import scala.concurrent.ExecutionContext.Implicits.global
@@ -26,10 +26,10 @@ with Matchers with Futures with Eventually {
      * Note: 'whenReady' is a simple way to wait until the future completes
      */
     it("should use basic futures") {
-      ScalaFutures.whenReady(EventualFuture.getFilmNameById(1)) { response =>
+      ScalaFutures.whenReady(Step8_Futures.getFilmNameById(1)) { response =>
         response shouldBe Some("Saving Private Ryan")
       }
-      ScalaFutures.whenReady(EventualFuture.getFilmNameById(9)) { response =>
+      ScalaFutures.whenReady(Step8_Futures.getFilmNameById(9)) { response =>
         response shouldBe None
       }
     }
@@ -39,7 +39,7 @@ with Matchers with Futures with Eventually {
      * times until we get a timeout
      */
     it("should handle the results of futures") {
-      val successResponse = EventualFuture.getEventualFilmById(1)
+      val successResponse = Step8_Futures.getEventualFilmById(1)
       eventually(timeout(scaled(1 seconds))) {
         successResponse.onSuccess {
           case film => film shouldBe FilmRepository.films.get(1).get
@@ -48,7 +48,7 @@ with Matchers with Futures with Eventually {
           case error: Error => fail(error.getMessage)
         }
       }
-      val failingResponse = EventualFuture.getEventualFilmById(6)
+      val failingResponse = Step8_Futures.getEventualFilmById(6)
       eventually(timeout(scaled(2 seconds))) {
         failingResponse.onComplete {
           case Success(film) => fail(s"this should not happen->$film")
@@ -58,7 +58,7 @@ with Matchers with Futures with Eventually {
     }
 
     it("should operates on values inside futures") {
-      ScalaFutures.whenReady(EventualFuture.sumFilmsPricesById(List(1, 2))) {
+      ScalaFutures.whenReady(Step8_Futures.sumFilmsPricesById(List(1, 2))) {
         _ shouldBe 6.8
       }
     }
@@ -69,7 +69,7 @@ with Matchers with Futures with Eventually {
         Future.successful(2.2),
         Future.successful(3.3)
       )
-      ScalaFutures.whenReady(EventualFuture.sumEventualPrices(eventualValues)) {
+      ScalaFutures.whenReady(Step8_Futures.sumEventualPrices(eventualValues)) {
         _ shouldBe 6.6
       }
     }
@@ -84,7 +84,7 @@ with Matchers with Futures with Eventually {
 
       // when
       val films: Future[List[Film]] =
-        EventualFuture.findMoviesByGenreAndId(War, movieIds)
+        Step8_Futures.findMoviesByGenreAndId(War, movieIds)
 
       ScalaFutures.whenReady(films) {
         _ should be(expectedFilms)
@@ -92,7 +92,7 @@ with Matchers with Futures with Eventually {
     }
 
     it("should get 4 durations of 1 second created with different techniques") {
-      EventualFuture.get4DurationsOfTenSeconds shouldBe List.fill(4)(10 seconds)
+      Step8_Futures.get4DurationsOfTenSeconds shouldBe List.fill(4)(10 seconds)
     }
 
     /*
@@ -106,7 +106,7 @@ with Matchers with Futures with Eventually {
       val duration = 1 second
 
       // when
-      val eventualSum = EventualFuture.eventualSumFromMovieIds(firstFilmId, secondFilmId, thirdFilmId)
+      val eventualSum = Step8_Futures.eventualSumFromMovieIds(firstFilmId, secondFilmId, thirdFilmId)
 
       // then
       Await.result(eventualSum, duration) shouldBe 9.5
@@ -121,7 +121,7 @@ with Matchers with Futures with Eventually {
 
       intercept[java.util.concurrent.TimeoutException] {
         // when
-        val eventualSum = EventualFuture.slowEventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
+        val eventualSum = Step8_Futures.slowEventualSumFromMoviesIds(firstFilmId, secondFilmId, thirdFilmId)
         // then
         Await.result(eventualSum, duration) shouldBe 9.5
       }

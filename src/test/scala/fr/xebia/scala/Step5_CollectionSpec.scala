@@ -1,24 +1,25 @@
-package fr.xebia.scala.model
+package fr.xebia.scala
 
-import fr.xebia.scala.control.{PriceCalculations, CollectionTools}
+import fr.xebia.scala.control.{CollectionTools, PriceCalculations}
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
+import fr.xebia.scala.model.{Film, MockFilmData}
 import org.scalatest.{FunSpec, Matchers}
 
-class CollectionSpec extends FunSpec with MockFilmData with Matchers {
+class Step5_CollectionSpec extends FunSpec with MockFilmData with Matchers {
 
   describe("several utilitary methods in List") {
 
     it("should use List#filter") {
       // when
-      val films = Film.getFilmsMadeBy(Hitchcock, completeList)
+      val films = Step5_Collections.getFilmsMadeBy(Hitchcock, completeList)
       // then
       films shouldBe hitchcockFilms
     }
 
     it("should use films List#filter and curring") {
       // when
-      val filmFilter = Film.filterFilmsWithDirector(completeList) _
+      val filmFilter = Step5_Collections.filterFilmsWithDirector(completeList) _
       // then
       filmFilter(Hitchcock) shouldBe hitchcockFilms
       filmFilter(Kurosawa) shouldBe kurosawaFilms
@@ -26,7 +27,7 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
 
     it("should use films List#filter and high order functions") {
       // when
-      val filmFilter = Film.filterFilmsUsingFilter(completeList) _
+      val filmFilter = Step5_Collections.filterFilmsUsingFilter(completeList) _
       // then
       filmFilter(_.director == Hitchcock) shouldBe hitchcockFilms
       filmFilter(_.director == Kurosawa) shouldBe kurosawaFilms
@@ -34,7 +35,7 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
 
     it("should use films Collection#filter and high order functions") {
       // when
-      val filmFilter = Film.filterFilmsUsingFilter2(completeList) _
+      val filmFilter = Step5_Collections.filterFilmsUsingFilter2(completeList) _
       // then
       filmFilter(_.director == Hitchcock) shouldBe hitchcockFilms
       filmFilter(_.director == Kurosawa) shouldBe kurosawaFilms
@@ -42,7 +43,7 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
 
     it("should use films List#filter and several filters") {
       // when
-      val filmFilter = Film.filterFilmsUsingMultipleFilter(completeList) _
+      val filmFilter = Step5_Collections.filterFilmsUsingMultipleFilter(completeList) _
       // then
       filmFilter(List(
         _.director == Hitchcock,
@@ -56,8 +57,8 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
     }
 
     it("should implement List#sum") {
-      Film.sumPricesWithRecursion(hitchcockFilms) shouldBe 7.8
-      Film.sumPricesWithRecursion(kurosawaFilms) shouldBe 5.3
+      Step5_Collections.sumPricesWithRecursion(hitchcockFilms) shouldBe 7.8
+      Step5_Collections.sumPricesWithRecursion(kurosawaFilms) shouldBe 5.3
     }
 
     it("should use pattern matching") {
@@ -66,12 +67,12 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
       val film3 = Film("The Adventures of Baron Munchausen", 1989, RandomDirector, List(Comedy), 15)
       val film4 = Film("Brazil", 1985, RandomDirector, List(SciFi), 2)
       val discountFilms = film1 :: film2 :: film3 :: film4 :: Nil
-      Film.discounts(discountFilms) shouldBe List(3.15, 4.0, 7.5, 2.0)
+      Step5_Collections.discounts(discountFilms) shouldBe List(3.15, 4.0, 7.5, 2.0)
     }
 
     it("should use folding to sum film prices") {
-      Film.sumPricesWithFolding(hitchcockFilms) shouldBe 7.8
-      Film.sumPricesWithFolding(kurosawaFilms) shouldBe 5.3
+      Step5_Collections.sumPricesWithFolding(hitchcockFilms) shouldBe 7.8
+      Step5_Collections.sumPricesWithFolding(kurosawaFilms) shouldBe 5.3
     }
 
   }
@@ -99,11 +100,11 @@ class CollectionSpec extends FunSpec with MockFilmData with Matchers {
     }
 
     it("should delete consecutive duplicates") {
-      Film.deleteConsecutiveDuplicates(Nil) shouldBe Nil
-      Film.deleteConsecutiveDuplicates(List(ran)) shouldBe List(ran)
-      Film.deleteConsecutiveDuplicates(List(ran, rashomon)) shouldBe List(ran, rashomon)
-      Film.deleteConsecutiveDuplicates(List(ran, rashomon, rashomon)) shouldBe List(ran, rashomon)
-      Film.deleteConsecutiveDuplicates(List(ran, ran, rashomon, rashomon)) shouldBe List(ran, rashomon)
+      Step5_Collections.deleteConsecutiveDuplicates(Nil) shouldBe Nil
+      Step5_Collections.deleteConsecutiveDuplicates(List(ran)) shouldBe List(ran)
+      Step5_Collections.deleteConsecutiveDuplicates(List(ran, rashomon)) shouldBe List(ran, rashomon)
+      Step5_Collections.deleteConsecutiveDuplicates(List(ran, rashomon, rashomon)) shouldBe List(ran, rashomon)
+      Step5_Collections.deleteConsecutiveDuplicates(List(ran, ran, rashomon, rashomon)) shouldBe List(ran, rashomon)
     }
   }
 

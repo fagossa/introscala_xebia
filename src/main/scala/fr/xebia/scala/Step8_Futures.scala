@@ -1,10 +1,10 @@
-package fr.xebia.scala.control
+package fr.xebia.scala
 
-import fr.xebia.scala.model.{Film, FilmRepository, Genre}
+import fr.xebia.scala.model.{FilmRepository, Film, Genre}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object EventualFuture {
+object Step8_Futures {
 
   /*
    * Get the film name by the id specified
@@ -20,14 +20,16 @@ object EventualFuture {
    * Note:
    *  - call FilmRepository#findByIdOrFail inside the for-comprehension
    */
-  def getEventualFilmById(id: Int)(implicit ex: ExecutionContext) : Future[Film] =
+  def getEventualFilmById(id: Int)(implicit ex: ExecutionContext): Future[Film] =
     FilmRepository.findByIdOrFail(id)
 
   /*
    * Return a list containing 4 instances of 'Duration' constructed in different ways
    */
+
   import scala.concurrent.duration._
-  def get4DurationsOfTenSeconds : List[Duration] = {
+
+  def get4DurationsOfTenSeconds: List[Duration] = {
     val fromTimeUnit = Duration(10, SECONDS) // from Long and TimeUnit
     val fromLongAndString = Duration(10, "seconds") // from Long and String
     val fromImplicit = 10 seconds // implicitly from Long, Int or Double

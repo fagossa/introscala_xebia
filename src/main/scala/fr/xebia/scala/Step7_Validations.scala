@@ -1,6 +1,6 @@
-package fr.xebia.scala.control
+package fr.xebia.scala
 
-import fr.xebia.scala.control.FailureReason.{NotOldEnough, BoringFilm, TooExpensive}
+import fr.xebia.scala.FailureReason.{BoringFilm, TooExpensive, NotOldEnough}
 import fr.xebia.scala.model.Film
 import fr.xebia.scala.model.Genre.Crime
 
@@ -139,58 +139,4 @@ object CatsXor {
     } yield e3
   }
 
-}
-
-object ScalaZEither {
-
-  import scalaz.{-\/, \/, \/-}
-
-  /**
-    * Note:
-    * Use \/- for right
-    * Use -\/ for left
-    */
-
-  /*
-   * Validates if releaseYear <= 1980 otherwise NotOldEnough
-   */
-  private def validateReleaseDate(film: Film): \/[FailureReason, Film] =
-    if (film.releaseYear <= 1980) {
-      \/-(film)
-    } else {
-      -\/(NotOldEnough)
-    }
-
-  /*
-   * Validates if price <= 3 otherwise TooExpensive
-   */
-  private def validatePrice(film: Film): FailureReason \/ Film =
-    if (film.price <= 3) {
-      \/-(film)
-    } else {
-      -\/(TooExpensive)
-    }
-
-  /*
-   * Validates if 'type' contains Crime otherwise BoringFilm
-   */
-  def validateGenre(film: Film): FailureReason \/ Film =
-    if (film.`type`.contains(Crime)) {
-      \/-(film)
-    } else {
-      -\/(BoringFilm)
-    }
-
-  /*
-   * Note: we validate error using a fail fast approach in a for-comprehension:
-   *
-   * validateReleaseDate -> validatePrice -> validateGenre
-   */
-  def validateFilm(film: Film): FailureReason \/ Film = {
-    for {
-      e1 <- validateReleaseDate(film)
-      e2 <- validatePrice(e1)
-      e3 <- validateGenre(e2)
-    } yield e3
-  }
 }

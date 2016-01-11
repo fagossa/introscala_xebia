@@ -1,6 +1,6 @@
 package fr.xebia.scala.control
 
-object UserOptions {
+object OptionTools {
 
   /**
     * apply the mapper function to the option specified and wrap the

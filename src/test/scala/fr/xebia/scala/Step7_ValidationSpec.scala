@@ -1,15 +1,15 @@
-package fr.xebia.scala.model
+package fr.xebia.scala
 
 import cats.data.Xor
-import fr.xebia.scala.control._
+import fr.xebia.scala.FailureReason.{BoringFilm, NotOldEnough, TooExpensive}
 import fr.xebia.scala.model.Director._
-import FailureReason.{BoringFilm, TooExpensive, NotOldEnough}
+import fr.xebia.scala.model.Film
 import fr.xebia.scala.model.Genre._
 import org.scalatest.{FunSpec, Matchers}
 
 import scalaz.{-\/, \/-}
 
-class ValidationExampleSpec extends FunSpec with Matchers {
+class Step7_ValidationSpec extends FunSpec with Matchers {
 
   val ran = Film("Ran", 1985, Kurosawa, List(Action, Drama, War), 2.3)
   val rashomon = Film("Rashomon", 1950, Kurosawa, List(Crime, Drama), 3.0)
@@ -41,13 +41,6 @@ class ValidationExampleSpec extends FunSpec with Matchers {
       CatsXor.validateFilm(ran) shouldBe Xor.Left(NotOldEnough)
       CatsXor.validateFilm(vertigo) shouldBe Xor.Left(TooExpensive)
       CatsXor.validateFilm(psyco) shouldBe Xor.Left(BoringFilm)
-    }
-
-    it("""should show how to use '-\/' and '\/-' """) {
-      ScalaZEither.validateFilm(rashomon) shouldBe \/-(rashomon)
-      ScalaZEither.validateFilm(ran) shouldBe -\/(NotOldEnough)
-      ScalaZEither.validateFilm(vertigo) shouldBe -\/(TooExpensive)
-      ScalaZEither.validateFilm(psyco) shouldBe -\/(BoringFilm)
     }
 
   }
