@@ -25,6 +25,18 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
     }
 
     it("should be completed with TODO 4") {
+      Step1_Basics.plus21(() => 2).shouldBe(23)
+      Step1_Basics.plus21(() => 3).shouldBe(24)
+      Step1_Basics.plus21(() => 8).shouldBe(29)
+    }
+
+    it("should be completed with TODO 5") {
+      Step1_Basics.product(2)(8).shouldBe(16)
+      Step1_Basics.product(3)(-3).shouldBe(-9)
+      Step1_Basics.product(8)(25).shouldBe(200)
+    }
+
+    it("should be completed with TODO 6") {
       Step1_Basics.fxy(1, 2).shouldBe(6)
       Step1_Basics.fx(2)(1).shouldBe(6)
 
@@ -38,7 +50,7 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
       Step1_Basics.fy(3)(5).shouldBe(31)
     }
 
-    it("should be completed with TODO 5") {
+    it("should be completed with TODO 7") {
       Step1_Basics.gxy(1)(2).shouldBe(-2)
       Step1_Basics.gx(2)(1).shouldBe(-2)
 
@@ -52,14 +64,14 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
       Step1_Basics.gy(3)(5).shouldBe(-19)
     }
 
-    it("should be completed with TODO 6") {
+    it("should be completed with TODO 8") {
       Step1_Basics.vararg(1).shouldBe(1)
       Step1_Basics.vararg(42, 8).shouldBe(50)
       Step1_Basics.vararg(1, 2, 3).shouldBe(6)
       Step1_Basics.vararg(75, 98, 89, 11).shouldBe(273)
     }
 
-    it("should be completed with TODO 7") {
+    it("should be completed with TODO 9") {
       Step1_Basics.expression(0).shouldBe("ok")
       Step1_Basics.expression(1).shouldBe("ko")
       Step1_Basics.expression(2).shouldBe("ko")
