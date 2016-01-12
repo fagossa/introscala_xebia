@@ -20,6 +20,19 @@ class Step4_ObjectsSpec extends FunSpec with Matchers {
       Craftsman.check(new Craftsman(99)).shouldBe(true)
     }
 
+    it("should be completed with TODO 3") {
+      Scorer()
+      Scorer.count.shouldBe(1)
+      Scorer()
+      Scorer()
+      Scorer.count.shouldBe(3)
+      DoubleScorer()
+      Scorer.count.shouldBe(5)
+      DoubleScorer()
+      DoubleScorer()
+      Scorer.count.shouldBe(9)
+    }
+
   }
 
 }

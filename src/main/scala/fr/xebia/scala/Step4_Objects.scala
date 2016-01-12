@@ -38,4 +38,25 @@ object Step4_Objects {
 
   }
 
+  /*
+    classes or objects can have an apply function:
+    object Foo {
+      def apply() = ???
+    }
+    this function can be called without naming it:
+    Foo()
+    TODO 3 apply methods
+      => Scorer's apply should increment Scorer's count on each call
+      => DoubleScorer's apply should call Scorer's apply method twice on each call
+  */
+  object Scorer {
+    var count = 0
+
+    def apply() = ???
+  }
+
+  object DoubleScorer {
+    def apply() = ???
+  }
+
 }
