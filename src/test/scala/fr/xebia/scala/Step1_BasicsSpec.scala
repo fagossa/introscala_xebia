@@ -78,6 +78,15 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
       Step1_Basics.expression(42).shouldBe("ko")
     }
 
+    it("should be completed with TODO 10") {
+      Step1_Basics.oddEven(-2).shouldBe("even")
+      Step1_Basics.oddEven(-1).shouldBe("odd")
+      Step1_Basics.oddEven(0).shouldBe("even")
+      Step1_Basics.oddEven(1).shouldBe("odd")
+      Step1_Basics.oddEven(99).shouldBe("odd")
+      Step1_Basics.oddEven(1024).shouldBe("even")
+    }
+
   }
 
 }

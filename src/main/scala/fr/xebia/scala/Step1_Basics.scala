@@ -78,9 +78,23 @@ object Step1_Basics {
   /*
     if/else expressions can be used to return values like this:
       def metal(x: String): Int = if (x == "ok") 0 else 1
-    TODO 9 function with expression
-      => expression should return "ok" if x argument is 0, "ko" otherwise using if/else expression
+    TODO 9 if/else expressions
+      => expression should return "ok" if x argument is 0, "ko" otherwise, using if/else expression
   */
   def expression(x: Int): String = ???
+
+  /*
+    pattern matching expressions can be used to return values like this:
+      def metal(x: Int): String = x match {
+        case 0 => "zero"
+        case 1 => "one"
+        case 2 => "two"
+        case i if i < 10 => "less than 10"
+        case _ => "ten or more than ten"
+      }
+    TODO 10 pattern matching expressions
+      => oddEven should return "even" if x % 2 == 0, "odd" otherwise, using pattern matching
+  */
+  def oddEven(x: Int): String = ???
 
 }
