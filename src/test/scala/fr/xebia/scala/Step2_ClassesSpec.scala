@@ -1,6 +1,6 @@
 package fr.xebia.scala
 
-import fr.xebia.scala.Step2_Classes.{UserWithName, UserWithNameAndAge, UserWithPassword}
+import fr.xebia.scala.Step2_Classes.{Item, UserWithName, UserWithNameAndAge, UserWithPassword}
 import org.scalatest.{FunSpec, Matchers}
 
 import scala.reflect.runtime.universe._
@@ -29,6 +29,23 @@ class Step2_ClassesSpec extends FunSpec with Matchers {
 
     it("should be completed with TODO 4") {
       typeOf[UserWithPassword].decl(TermName("password")).isPrivate.shouldBe(true)
+    }
+
+    it("should be completed with TODO 5") {
+      val item = new Item("Chocolate", 5)
+      Step2_Classes.itemAsString(item).shouldBe("Item(Chocolate,5)")
+      Step2_Classes.compare(item, new Item("Chocolate", 5)).shouldBe(true)
+      Step2_Classes.compare(item, new Item("Chocolate", 0)).shouldBe(false)
+      Step2_Classes.compare(item, new Item("Sugar", 5)).shouldBe(false)
+      Step2_Classes.compare(item, new Item("Sugar", 0)).shouldBe(false)
+      Step2_Classes.fidelity(new Item("Beer", 6)).shouldBe(2)
+      Step2_Classes.fidelity(new Item("Beer", 10)).shouldBe(2)
+      Step2_Classes.fidelity(new Item("Beer", 5)).shouldBe(1)
+      Step2_Classes.fidelity(new Item("BeerA", 6)).shouldBe(1)
+      Step2_Classes.fidelity(new Item("BeerB", 5)).shouldBe(1)
+      Step2_Classes.fidelity(new Item("BeerB", 0)).shouldBe(1)
+      Step2_Classes.fidelity(new Item("Hot Chocolate", 0)).shouldBe(0)
+      Step2_Classes.fidelity(new Item("Hot Chocolate", 5)).shouldBe(0)
     }
 
   }
