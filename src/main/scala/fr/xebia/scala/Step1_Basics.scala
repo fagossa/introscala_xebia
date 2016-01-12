@@ -7,20 +7,20 @@ object Step1_Basics {
       var name: Type = Initializer
     TODO 1 variables => initialize this variable with a value of 24... is it that simple ?
   */
-  var variable: Int = 0
+  var variable: Int = ???
 
   /*
     values are declared like variables but with val keyword
     TODO 2 values => initialize this value with a value of 42... keeping it simple
   */
-  val value: Int = 0
+  val value: Int = ???
 
   /*
     functions are declared like this:
       def name(param: Type): ReturnType = Initializer
     TODO 3 functions => make square function return the square value of the given x argument
   */
-  def square(x: Int): Int = 0
+  def square(x: Int): Int = ???
 
   /*
     functions can be partially applied like this:
@@ -30,9 +30,9 @@ object Step1_Basics {
   */
   def fxy(x: Int, y: Int): Int = (2 * x) + (y * y)
 
-  def fx(y: Int): Int => Int = (_: Int) => 0 // stub implementation
+  def fx(y: Int): Int => Int = ???
 
-  def fy(x: Int): Int => Int = (_: Int) => 0 // stub implementation
+  def fy(x: Int): Int => Int = ???
 
   /*
     functions can be curried like this:
@@ -42,22 +42,22 @@ object Step1_Basics {
   */
   def gxy(x: Int)(y: Int): Int = (2 * x) - (y * y)
 
-  def gx(y: Int): Int => Int = (_: Int) => 0 // stub implementation
+  def gx(y: Int): Int => Int = ???
 
-  def gy(x: Int): Int => Int = (_: Int) => 0 // stub implementation
+  def gy(x: Int): Int => Int = ???
 
   /*
     functions can have variable length arguments:
       def foo(x: Int*): Int = ???
     TODO 6 variable length arguments => make vararg return sum of x variable length argument
   */
-  def vararg(x: Int*): Int = 0
+  def vararg(x: Int*): Int = ???
 
   /*
     if/else expressions can be used to return values like this:
       def metal(x: String): Int = if (x == "ok") 0 else 1
     TODO 7 function with expression => return "ok" if x argument is 0, "ko" otherwise using if/else expression
   */
-  def expression(x: Int): String = ""
+  def expression(x: Int): String = ???
 
 }

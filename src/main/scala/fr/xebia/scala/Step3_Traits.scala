@@ -18,7 +18,7 @@ object Step3_Traits {
 
     def greet(): String
 
-    def greetDecorated(): String = ""
+    def greetDecorated(): String = ???
 
   }
 
@@ -32,9 +32,9 @@ object Step3_Traits {
   */
   class GentleGreeter extends Greeter {
 
-    override var name: String = ""
+    override var name: String = ???
 
-    override def greet(): String = ""
+    override def greet(): String = ???
   }
 
 }

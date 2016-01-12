@@ -9,9 +9,9 @@ object Step2_Classes {
   */
   class Greeter {
 
-    val name: String = ""
+    val name: String = ???
 
-    def greetings(): String = ""
+    def greetings(): String = ???
 
   }
 
@@ -25,7 +25,7 @@ object Step2_Classes {
   */
   class UserWithName(val name: String) {
 
-    def greetings(): String = ""
+    def greetings(): String = ???
 
   }
 
@@ -39,7 +39,7 @@ object Step2_Classes {
   */
   class UserWithNameAndAge(name: String, val age: Int) extends UserWithName(name) {
 
-    override def greetings(): String = ""
+    override def greetings(): String = ???
 
   }
 

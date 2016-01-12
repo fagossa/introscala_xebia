@@ -17,23 +17,23 @@ object Step4_Objects {
 
   }
 
-  def greet(): String = ""
+  def greet(): String = ???
 
   /*
     object can share the same name with a class, it is then named companion object:
       class Foo {}
       object Foo {} // this is our companion object
     TODO 2 companion object:
-      => implement beginner method (it is just a factory of Craftsman with 0 badges, thus beginners)
+      => implement beginner method (it is just a factory of Craftsman with 0 badges)
       => make check method return true if Craftsman's badges are strictly greater than 10, false otherwise
   */
   class Craftsman(val badges: Int) {}
 
   object Craftsman {
 
-    def beginner(): Craftsman = null
+    def beginner(): Craftsman = ???
 
-    def check(craftsman: Craftsman): Boolean = false
+    def check(craftsman: Craftsman): Boolean = ???
 
   }
 
