@@ -38,6 +38,9 @@ class Step2_ClassesSpec extends FunSpec with Matchers {
       Step2_Classes.compare(item, new Item("Chocolate", 0)).shouldBe(false)
       Step2_Classes.compare(item, new Item("Sugar", 5)).shouldBe(false)
       Step2_Classes.compare(item, new Item("Sugar", 0)).shouldBe(false)
+    }
+
+    it("should be completed with TODO 6") {
       Step2_Classes.fidelity(new Item("Beer", 6)).shouldBe(2)
       Step2_Classes.fidelity(new Item("Beer", 10)).shouldBe(2)
       Step2_Classes.fidelity(new Item("Beer", 5)).shouldBe(1)

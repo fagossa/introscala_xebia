@@ -57,23 +57,32 @@ object Step2_Classes {
   class UserWithPassword(val password: String) {}
 
   /*
-    case classes is a shortcut declaration for classes  powered with equals and toString using given fields:
-      case class Foo(var age: Int, var name: String) {}
+    case classes is a shortcut declaration for classes powered with equals and toString using given fields:
+      case class Foo(age: Int, name: String) {}
     constructor fields are automatically assigned as values (if not declared as var)
     TODO 5 case classes
       => string should return Item's case class string representation
       => compare should fully compare item1 and item2
-      => fidelity should return (using pattern matching):
-        - 2 points for Item "Beer" with price > 5
-        - 1 point for Item with name matching "Beer(.*)" at any price
-        - 0 points otherwise
   */
-  class Item(name: String, price: Int) {}
+  case class Item(name: String, price: Int) {}
 
   def itemAsString(item: Item): String = ???
 
   def compare(item1: Item, item2: Item): Boolean = ???
 
+  /*
+    case classes can benefit a lot from pattern matching:
+    def check(item: Item): String = item match {
+      case Item("Awesome", 1) => "cheap"
+      case Item("Useful", 10) => "expansive"
+      case Item(_, _) => "TBD"
+    }
+    TODO 6 case classes and pattern matching
+      => fidelity should return (using pattern matching):
+        - 2 points for Item "Beer" with price > 5
+        - 1 point for Item with name matching "Beer(.*)" at any price
+        - 0 points otherwise
+  */
   def fidelity(item: Item): Int = ???
 
 }
