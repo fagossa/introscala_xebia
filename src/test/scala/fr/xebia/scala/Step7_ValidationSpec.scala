@@ -7,8 +7,6 @@ import fr.xebia.scala.model.Film
 import fr.xebia.scala.model.Genre._
 import org.scalatest.{FunSpec, Matchers}
 
-import scalaz.{-\/, \/-}
-
 class Step7_ValidationSpec extends FunSpec with Matchers {
 
   val ran = Film("Ran", 1985, Kurosawa, List(Action, Drama, War), 2.3)
