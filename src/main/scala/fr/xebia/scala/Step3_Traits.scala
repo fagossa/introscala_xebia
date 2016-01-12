@@ -10,7 +10,8 @@ object Step3_Traits {
         def draw()
         def translate(dx: Int) = x + dx
       }
-    TODO 1 trait declaration => make greetDecorated method return greet method's return prefixed with "Decorated:"
+    TODO 1 trait declaration
+      => greetDecorated should return greet's return prefixed with "Decorated:"
   */
   trait Greeter {
 
@@ -28,7 +29,9 @@ object Step3_Traits {
       trait Bar {}
       class Qux extends Foo {}
       class Norf extends Foo with Bar {} // to inherit multiple traits
-    TODO 2 trait inheritance => initialize name and make greet method return "Hello my name is $name"
+    TODO 2 trait inheritance and usage
+      => name should be initialized
+      => greet should return "Hello my name is $name"
   */
   class GentleGreeter extends Greeter {
 

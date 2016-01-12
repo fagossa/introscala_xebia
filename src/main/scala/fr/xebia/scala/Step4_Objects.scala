@@ -9,9 +9,10 @@ object Step4_Objects {
       object Foo {}
     objects are referenced with Java's static-like syntax:
       Foo.toString
-    TODO 1 object => make greet method return CrazyLegs's greet field prefixed by "CrazyLegs says:"
+    TODO 1 object
+      => greet method should return RandomGreeter's greet field prefixed by "RandomGreeter:"
   */
-  object CrazyLegs {
+  object RandomGreeter {
 
     val greet: String = UUID.randomUUID().toString
 
@@ -23,9 +24,9 @@ object Step4_Objects {
     object can share the same name with a class, it is then named companion object:
       class Foo {}
       object Foo {} // this is our companion object
-    TODO 2 companion object:
-      => implement beginner method (it is just a factory of Craftsman with 0 badges)
-      => make check method return true if Craftsman's badges are strictly greater than 10, false otherwise
+    TODO 2 companion object
+      => beginner should return a new Craftsman with 0 badges
+      => check should return true if given craftsman's badges are strictly greater than 10, false otherwise
   */
   class Craftsman(val badges: Int) {}
 
