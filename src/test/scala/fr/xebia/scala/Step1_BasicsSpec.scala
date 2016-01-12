@@ -1,5 +1,7 @@
 package fr.xebia.scala
 
+import java.util.UUID
+
 import org.scalatest.{FunSpec, Matchers}
 
 import scala.reflect.runtime.universe._
@@ -85,6 +87,14 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
       Step1_Basics.oddEven(1).shouldBe("odd")
       Step1_Basics.oddEven(99).shouldBe("odd")
       Step1_Basics.oddEven(1024).shouldBe("even")
+    }
+
+    it("should be completed with TODO 11") {
+      val random = UUID.randomUUID().toString
+      val unsafeRuntimeException = () => throw new RuntimeException("bad runtime exception:" + random)
+      val unsafeException = () => throw new Exception("bad checked exception:" + random)
+      Step1_Basics.safeHandler(unsafeRuntimeException).shouldBe("Runtime:" + "bad runtime exception:" + random + ":Finally")
+      Step1_Basics.safeHandler(unsafeException).shouldBe("bad checked exception:" + random + ":Finally")
     }
 
   }

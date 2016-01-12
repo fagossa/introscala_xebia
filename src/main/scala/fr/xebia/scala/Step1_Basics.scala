@@ -97,4 +97,20 @@ object Step1_Basics {
   */
   def oddEven(x: Int): String = ???
 
+  /*
+    exceptions are handled using pattern matching:
+      try {
+        someCall()
+      } catch {
+        case e: VeryBadException => print("that one hurt")
+      } finally {
+        someClose()
+      }
+    TODO 11 exceptions
+      => safeHandler should call given unsafe function and handle its exceptions
+      => safeHandler should return exception's message suffixed with ":Finally"
+      => when exception is of Type RuntimeException message should be prefixed with "Runtime:"
+  */
+  def safeHandler(unsafe: () => Unit): String = ???
+
 }
