@@ -14,7 +14,7 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
     }
 
     it("should be completed with TODO 2") {
-      assertResult(Step1_Basics.value)(42)
+      Step1_Basics.value.shouldBe(42)
       typeOf[Step1_Basics.type].decl(TermName("value")).asTerm.accessed.asTerm.isVal.shouldBe(true)
     }
 
