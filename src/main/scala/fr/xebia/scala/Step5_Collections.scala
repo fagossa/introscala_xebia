@@ -7,12 +7,16 @@ import scala.annotation.tailrec
 
 object Step5_Collections {
 
+  /*
+   * TODO 1: basic filter
+   */
   def getFilmsMadeBy(director: Director, films: List[Film]): List[Film] =
     films.filter(f => f.director == director)
 
   /*
    * Get the films directed only by the director specified
-   * Note: Now we have two blocks of parameters. This is called currying. Refer to the documentation for further
+   * TODO 2:
+   * Now we have two blocks of parameters. This is called currying. Refer to the documentation for further
    * information.
    */
   def filterFilmsWithDirector(films: List[Film])(director: Director): List[Film] =
@@ -20,20 +24,20 @@ object Step5_Collections {
 
   /*
    * Get the films using the filter specified
-   * Note:
+   * TODO 3: This time we have the filter specified as a parameter. So, we we have a 'high order function'
    */
   def filterFilmsUsingFilter(films: List[Film])(withCustomFilter: Film => Boolean): List[Film] =
     films.filter(withCustomFilter)
 
   /*
-   * Note: use/implement CollectionTools#filter
+   * TODO 4: use/implement CollectionTools#filter
    */
-  def filterFilmsUsingFilter2(films: List[Film])(withCustomFilter: Film => Boolean): List[Film] =
+  def filterFilmsUsingAnotherFilter(films: List[Film])(withCustomFilter: Film => Boolean): List[Film] =
     CollectionTools.filter(films, withCustomFilter)
 
   /*
    * Get the films by applying the filter list specified
-   * Note: use pattern matching and recursion
+   * TODO 5: use pattern matching and recursion
    */
   def filterFilmsUsingMultipleFilter(films: List[Film])(withCustomFilters: List[Film => Boolean]): List[Film] =
     withCustomFilters match {
@@ -41,7 +45,9 @@ object Step5_Collections {
       case h :: t => filterFilmsUsingMultipleFilter(films.filter(h))(t)
     }
 
-  // Note: use recursion
+  /*
+   * TODO 6: Sum the prices of the films specified using recursion
+   */
   def sumPricesWithRecursion(films: List[Film]): Double = {
     @tailrec
     def go(films: List[Film], sum: Double): Double = {
@@ -54,13 +60,13 @@ object Step5_Collections {
   }
 
   /*
+   * TODO 7: Use pattern matching on tuples to execute the following rules:
+   *
    * Apply discounts for all films following these rules:
    * - 35% reduction if price is only multiple of 3
    * - 40% reduction if price is only multiple of 5
    * - 50% reduction if price is both multiple of 5 and 3
    * - 0% reduction otherwise
-   *
-   * Note: you can use pattern matching on tuples
    */
   def discounts(films: List[Film]): List[Double] = films match {
     case Nil => Nil
@@ -72,12 +78,14 @@ object Step5_Collections {
     }
   }
 
-  // Note: you could use 'foldLeft' which in fact is a curried function
+  /*
+   * TODO 8: use 'foldLeft' (which in fact is a curried function) to get the sum of prices
+   */
   def sumPricesWithFolding(films: List[Film]): Double =
     films.foldLeft(0d)((r, c) => r + c.price)
 
   /*
-   * Delete duplicate consecutive numbers
+   * TODO 9: Delete duplicate consecutive numbers using foldLeft
    */
   def deleteConsecutiveDuplicates(allFilms: List[Film]): List[Film] =
     allFilms.foldLeft(List.empty[Film])((acc, next) =>

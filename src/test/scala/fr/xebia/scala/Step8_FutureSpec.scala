@@ -25,7 +25,7 @@ with Matchers with Futures with Eventually {
     /*
      * Note: 'whenReady' is a simple way to wait until the future completes
      */
-    it("should use basic futures") {
+    it("should use basic futures with TODO 1") {
       ScalaFutures.whenReady(Step8_Futures.getFilmNameById(1)) { response =>
         response shouldBe Some("Saving Private Ryan")
       }
@@ -38,7 +38,7 @@ with Matchers with Futures with Eventually {
      * Note: 'eventually' is loop that allow us to execute a pice of code several
      * times until we get a timeout
      */
-    it("should handle the results of futures") {
+    it("should handle the results of futures with TODO 2") {
       val successResponse = Step8_Futures.getEventualFilmById(1)
       eventually(timeout(scaled(1 seconds))) {
         successResponse.onSuccess {
@@ -57,13 +57,13 @@ with Matchers with Futures with Eventually {
       }
     }
 
-    it("should operates on values inside futures") {
+    it("should operates on values inside futures with TODO 3") {
       ScalaFutures.whenReady(Step8_Futures.sumFilmsPricesById(List(1, 2))) {
         _ shouldBe 6.8
       }
     }
 
-    it("should use Future#fold") {
+    it("should use Future#fold with TODO 4") {
       val eventualValues = List(
         Future.successful(1.1),
         Future.successful(2.2),
@@ -74,7 +74,7 @@ with Matchers with Futures with Eventually {
       }
     }
 
-    it("should use Future#sequence") {
+    it("should use Future#sequence TODO 5") {
       // given
       val movieIds = List(1, 2, 5)
       val expectedFilms = List(
@@ -91,14 +91,14 @@ with Matchers with Futures with Eventually {
       }
     }
 
-    it("should get 4 durations of 1 second created with different techniques") {
+    it("should get 4 durations of 1 second created with different techniques with TODO 6") {
       Step8_Futures.get4DurationsOfTenSeconds shouldBe List.fill(4)(10 seconds)
     }
 
     /*
      * Note: 'Await.result' blocks the current execution thread until timeout
      */
-    it("should execute the futures in a concurrent way") {
+    it("should execute the futures in a concurrent way with TODO 7") {
       // given
       val firstFilmId = 1
       val secondFilmId = 2
@@ -112,7 +112,7 @@ with Matchers with Futures with Eventually {
       Await.result(eventualSum, duration) shouldBe 9.5
     }
 
-    it("should execute the futures in a concurrent way handling timeouts") {
+    it("should execute the futures in a concurrent way handling timeouts with TODO 8") {
       // given
       val firstFilmId = 1
       val secondFilmId = 2

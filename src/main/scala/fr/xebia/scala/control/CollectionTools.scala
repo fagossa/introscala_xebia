@@ -4,7 +4,8 @@ import scala.annotation.tailrec
 
 object CollectionTools {
 
-  /**
+  /*
+    * TODO 4:
     * remove elements from list if they don't pass the predicate specified
     */
   def filter[A](list: List[A], withFilter: A => Boolean): List[A] = list match {
@@ -13,7 +14,8 @@ object CollectionTools {
     case h :: t => filter(t, withFilter)
   }
 
-  /**
+  /*
+    * TODO 10:
     * creates a tuple from each pair of elements
     */
   def zip[A, B](first: List[A], second: List[B]): List[(A, B)] = {
@@ -24,7 +26,8 @@ object CollectionTools {
     }
   }
 
-  /**
+  /*
+    * TODO PriceCalculations_2:
     * creates a tuple from each pair of elements keeping the index
     */
   def zipWithIndex[A](first: List[A]): List[(A, Int)] = {
@@ -38,7 +41,8 @@ object CollectionTools {
   }
 
 
-  /**
+  /*
+    * TODO 11:
     * Fill a list with the element specified
     */
   def fillList[A](qty: Int)(element: A): List[A] = {

@@ -9,7 +9,7 @@ object Step8_Futures {
   /*
    * Get the film name by the id specified
    *
-   * Note:
+   * TODO 1:
    *  - Use FilmRepository#findById to retrieve the film
    */
   def getFilmNameById(id: Int)(implicit ex: ExecutionContext): Future[Option[String]] =
@@ -17,7 +17,7 @@ object Step8_Futures {
 
   /*
    *
-   * Note:
+   * TODO 2:
    *  - call FilmRepository#findByIdOrFail inside the for-comprehension
    */
   def getEventualFilmById(id: Int)(implicit ex: ExecutionContext): Future[Film] =
@@ -29,18 +29,10 @@ object Step8_Futures {
 
   import scala.concurrent.duration._
 
-  def get4DurationsOfTenSeconds: List[Duration] = {
-    val fromTimeUnit = Duration(10, SECONDS) // from Long and TimeUnit
-    val fromLongAndString = Duration(10, "seconds") // from Long and String
-    val fromImplicit = 10 seconds // implicitly from Long, Int or Double
-    val fromString = Duration("10 s") // from String
-    List(fromTimeUnit, fromLongAndString, fromImplicit, fromString)
-  }
-
   /*
    * Sum the prices of all the films specified
    *
-   * Note:
+   * TODO 3:
    *  - Use FilmRepository#findById to retrieve the film
    *  - Use Future#sequence for List[Future] to Future[List]
    */
@@ -53,7 +45,7 @@ object Step8_Futures {
   /*
    * Sum the prices of all the films specified
    *
-   * Note:
+   * TODO 4:
    *  - Use Future#fold to traverse the list of prices
    */
   def sumEventualPrices(prices: List[Future[Double]])(implicit ex: ExecutionContext): Future[Double] =
@@ -62,7 +54,7 @@ object Step8_Futures {
   /*
    * Get the films having the ids specified of the genre specified
    *
-   * Note:
+   * TODO 5:
    *  - Use FilmRepository#findById to retrieve each film
    *  - Use Future#sequence for List[Future] to Future[List]
    */
@@ -74,8 +66,20 @@ object Step8_Futures {
   }
 
   /*
+   * TODO 6:
+   * create 4 instances of 'Duration' of 10 seconds using different constructors
+   */
+  def get4DurationsOfTenSeconds: List[Duration] = {
+    val fromTimeUnit = Duration(10, SECONDS) // from Long and TimeUnit
+    val fromLongAndString = Duration(10, "seconds") // from Long and String
+    val fromImplicit = 10 seconds // implicitly from Long, Int or Double
+    val fromString = Duration("10 s") // from String
+    List(fromTimeUnit, fromLongAndString, fromImplicit, fromString)
+  }
+
+  /*
    * Return the sum of the prices having the Id specified
-   * Note:
+   * TODO 7:
    *  - Use FilmRepository#findById to retrieve each film
    *  - IMPORTANT : all calls to FilmRepository#findById should be before the for-comprehension
    *  - sum the prices of the specified films
@@ -96,7 +100,7 @@ object Step8_Futures {
   /*
    * Return the sum of the prices having the Id specified
    *
-   * Note:
+   * TODO 8:
    *  - Use for-comprehension
    *  - IMPORTANT : all calls to FilmRepository#findById should be inside the for-comprehension
    *  - sum the prices of the specified films

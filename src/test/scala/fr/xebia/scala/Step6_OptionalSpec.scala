@@ -9,22 +9,7 @@ class Step6_OptionalSpec extends FunSpec with MockFilmData with Matchers {
 
   describe("working with Optional") {
 
-    it("should implement get total prices with index") {
-      PriceCalculations.calculateTotalPriceWithIndex(List.empty[Film], List(3, 5)) shouldBe None
-      PriceCalculations.calculateTotalPriceWithIndex(kurosawaFilms, List.empty) shouldBe None
-      PriceCalculations.calculateTotalPriceWithIndex(kurosawaFilms, List(2, 5)) shouldBe Some(List(
-        (0, 4.6),
-        (1, 15)
-      ))
-    }
-
-    it ("should show the behaviour of getOrElse") {
-      val maybeUser = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
-      Step6_Options.getUserNameOrElse(maybeUser, defaultName = "Toto") shouldBe "Akira"
-      Step6_Options.getUserNameOrElse(None, defaultName = "Toto") shouldBe "Toto"
-    }
-
-    it ("should use orElse") {
+    it ("should use orElse with TODO 1") {
       val maybeUser1 = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
       val maybeUser2 = Some(User(2, "Akira", "Toriyama", 55, Some("M")))
       Step6_Options.getUserOrElse(maybeUser1, None, maybeUser2) shouldBe maybeUser1
@@ -33,7 +18,13 @@ class Step6_OptionalSpec extends FunSpec with MockFilmData with Matchers {
       Step6_Options.getUserOrElse(None, None, None) shouldBe None
     }
 
-    it ("should use filter") {
+    it ("should show the behaviour of getOrElse with TODO 2") {
+      val maybeUser = Some(User(1, "Akira", "Kurosawa", 50, Some("M")))
+      Step6_Options.getUserNameOrElse(maybeUser, defaultName = "Toto") shouldBe "Akira"
+      Step6_Options.getUserNameOrElse(None, defaultName = "Toto") shouldBe "Toto"
+    }
+
+    it ("should use filter with TODO 3") {
       val user1 = User(2, "Christina", "Lawrence", 26, Some("F"))
       val user2 = User(2, "Angelina", "Jolie", 25, Some("F"))
       val user3 = User(2, "Jennifer", "Lawrence", 25, Some("F"))
@@ -44,7 +35,7 @@ class Step6_OptionalSpec extends FunSpec with MockFilmData with Matchers {
       Step6_Options.validUser(user4) shouldBe None
     }
 
-    it ("should use pattern matching") {
+    it ("should use pattern matching TODO 4") {
       val user1 = User(2, "Scarlett", "Johansson", 31, Some("F"))
       val user2 = User(2, "Michael", "Fassbender", 38, Some("M"))
       val user3 = User(2, "Titi", "Tata", 25, None)
@@ -53,7 +44,7 @@ class Step6_OptionalSpec extends FunSpec with MockFilmData with Matchers {
       Step6_Options.translateGender(user3) shouldBe NotSpecified
     }
 
-    it ("should use 'Option#map' and 'Option#flatMap'") {
+    it ("should use 'Option#map' and 'Option#flatMap' with TODO 5") {
       // Our first approach could be to simply map the result
       Step6_Options.getNaiveGenderFromUserId(1) shouldBe Some(Some("M"))
       // but as the result is also an Option then we are :(
@@ -64,7 +55,16 @@ class Step6_OptionalSpec extends FunSpec with MockFilmData with Matchers {
       Step6_Options.getGenderFromUserIdSugared(2) shouldBe None
       Step6_Options.getAllGenders shouldBe Seq("M", "F")
     }
-  }
 
+    it("should implement get total prices with index with TODO PriceCalculations_2") {
+      PriceCalculations.calculateTotalPriceWithIndex(List.empty[Film], List(3, 5)) shouldBe None
+      PriceCalculations.calculateTotalPriceWithIndex(kurosawaFilms, List.empty) shouldBe None
+      PriceCalculations.calculateTotalPriceWithIndex(kurosawaFilms, List(2, 5)) shouldBe Some(List(
+        (0, 4.6),
+        (1, 15)
+      ))
+    }
+
+  }
 
 }

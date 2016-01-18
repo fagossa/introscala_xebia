@@ -20,21 +20,21 @@ class Step7_ValidationSpec extends FunSpec with Matchers {
 
   describe("several utilitary methods in List") {
 
-    it("should show how to chain Option filters") {
+    it("should show how to chain Option filters with TODO 1") {
       ScalaOption.validateFilm(rashomon) shouldBe Some(rashomon)
       ScalaOption.validateFilm(ran) shouldBe None
       ScalaOption.validateFilm(vertigo) shouldBe None
       ScalaOption.validateFilm(psyco) shouldBe None
     }
 
-    it("should show how to use 'Either.left' and 'Either.right'") {
+    it("should show how to use 'Either.left' and 'Either.right' with TODO 2") {
       ScalaEither.validateFilm(rashomon) shouldBe Right(rashomon)
       ScalaEither.validateFilm(ran) shouldBe Left(NotOldEnough)
       ScalaEither.validateFilm(vertigo) shouldBe Left(TooExpensive)
       ScalaEither.validateFilm(psyco) shouldBe Left(BoringFilm)
     }
 
-    it("should show how to use 'Xor.left' and 'Xor.right'") {
+    it("should show how to use 'Xor.left' and 'Xor.right' with TODO 3") {
       CatsXor.validateFilm(rashomon) shouldBe Xor.Right(rashomon)
       CatsXor.validateFilm(ran) shouldBe Xor.Left(NotOldEnough)
       CatsXor.validateFilm(vertigo) shouldBe Xor.Left(TooExpensive)
