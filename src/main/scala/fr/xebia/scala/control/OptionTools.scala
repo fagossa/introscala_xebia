@@ -13,8 +13,8 @@ object OptionTools {
     }
 
   /*
-    * TODO 5: apply the mapper function to the option specified and wrap the result
-    */
+   * TODO 5: apply the mapper function to the option specified and wrap the result
+   */
   def map[A, B](maybe: Option[A])(mapper: A => B): Option[B] = {
     if (maybe.isDefined) {
       Some(mapper(maybe.get))
@@ -24,9 +24,9 @@ object OptionTools {
   }
 
   /*
-    *
-    * TODO 5: apply the mapper function to the option specified
-    */
+   *
+   * TODO 5: apply the mapper function to the option specified
+   */
   def flatMap[A, B](maybe: Option[A])(mapper: A => Option[B]): Option[B] = {
     if (maybe.isDefined) {
       mapper(maybe.get)

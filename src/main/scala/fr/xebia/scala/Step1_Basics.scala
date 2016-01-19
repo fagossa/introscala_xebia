@@ -6,14 +6,14 @@ object Step1_Basics {
     variables are declared and initialized like this:
       var name: Type = Initializer
     TODO 1 variables
-      => initialize this variable with a value of 24... is it that simple ?
+      => variable should be initialized with a value of 24... is it that simple ?
   */
   var variable: Int = 0
 
   /*
     values are declared like variables but with val keyword
     TODO 2 values
-      => initialize this value with a value of 42... keeping it simple
+      => value should be defined with a value of 42... keeping it simple
   */
   val value: Int = 0
 
@@ -21,7 +21,7 @@ object Step1_Basics {
     functions are declared like this:
       def name(param: Type): ReturnType = Initializer
     TODO 3 functions
-      => make square function return the square value of the given x argument
+      => square should return the square value of the given x argument
   */
   def square(x: Int): Int = ???
 

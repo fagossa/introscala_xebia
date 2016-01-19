@@ -38,11 +38,12 @@ object Step5_Collections {
   /*
    * Get the films by applying the filter list specified
    * TODO 5: use pattern matching and recursion
+   * note: you can match a collection using "case head :: tail => ..."
    */
   def filterFilmsUsingMultipleFilter(films: List[Film])(withCustomFilters: List[Film => Boolean]): List[Film] =
     withCustomFilters match {
       case Nil => films
-      case h :: t => filterFilmsUsingMultipleFilter(films.filter(h))(t)
+      case head :: tail => filterFilmsUsingMultipleFilter(films.filter(head))(tail)
     }
 
   /*
@@ -53,7 +54,7 @@ object Step5_Collections {
     def go(films: List[Film], sum: Double): Double = {
       films match {
         case Nil => sum
-        case h :: tail => go(tail, h.price + sum)
+        case head :: tail => go(tail, head.price + sum)
       }
     }
     go(films, 0)

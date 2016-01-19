@@ -24,12 +24,6 @@ object Step8_Futures {
     FilmRepository.findByIdOrFail(id)
 
   /*
-   * Return a list containing 4 instances of 'Duration' constructed in different ways
-   */
-
-  import scala.concurrent.duration._
-
-  /*
    * Sum the prices of all the films specified
    *
    * TODO 3:
@@ -69,6 +63,8 @@ object Step8_Futures {
    * TODO 6:
    * create 4 instances of 'Duration' of 10 seconds using different constructors
    */
+  import scala.concurrent.duration._
+
   def get4DurationsOfTenSeconds: List[Duration] = {
     val fromTimeUnit = Duration(10, SECONDS) // from Long and TimeUnit
     val fromLongAndString = Duration(10, "seconds") // from Long and String
