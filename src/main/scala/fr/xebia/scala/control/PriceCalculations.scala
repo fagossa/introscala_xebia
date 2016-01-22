@@ -6,7 +6,7 @@ object PriceCalculations {
 
   /*
    * TODO PriceCalculations_1: use CollectionTools#zip[A,B](List[A], List[B]):(A,B)
-   * Calculate the totalPrice of the list specified only if the film list size is equal to the prices list
+   * Calculate the totalPrice of the list specified ONLY if the film list size IS EQUAL to the prices list
    */
   def calculateTotalPrice(films: List[Film], qty: List[Int]): Option[Double] =
     if (films.size == qty.size) {
@@ -21,7 +21,7 @@ object PriceCalculations {
 
   /*
    * TODO PriceCalculations_2 : use CollectionTools#zipWithIndex[A](List[A]):(A, Int)
-   * Return the total price and the index on the ranking only if the film list size is equal to the prices list
+   * Return the total price and the index on the ranking ONLY if the film list size IS EQUAL to the prices list
    */
   def calculateTotalPriceWithIndex(films: List[Film], qty: List[Int]): Option[List[(Int, Double)]] =
     if (films.size == qty.size) {

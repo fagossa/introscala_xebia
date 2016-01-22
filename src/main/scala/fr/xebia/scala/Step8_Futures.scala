@@ -12,16 +12,14 @@ object Step8_Futures {
    * TODO 1:
    *  - Use FilmRepository#findById to retrieve the film
    */
-  def getFilmNameById(id: Int)(implicit ex: ExecutionContext): Future[Option[String]] =
-    FilmRepository.findById(id).map(_.map(_.name))
+  def getFilmNameById(id: Int)(implicit ex: ExecutionContext): Future[Option[String]] = ???
 
   /*
    *
    * TODO 2:
    *  - call FilmRepository#findByIdOrFail inside the for-comprehension
    */
-  def getEventualFilmById(id: Int)(implicit ex: ExecutionContext): Future[Film] =
-    FilmRepository.findByIdOrFail(id)
+  def getEventualFilmById(id: Int)(implicit ex: ExecutionContext): Future[Film] = ???
 
   /*
    * Sum the prices of all the films specified
@@ -30,11 +28,7 @@ object Step8_Futures {
    *  - Use FilmRepository#findById to retrieve the film
    *  - Use Future#sequence for List[Future] to Future[List]
    */
-  def sumFilmsPricesById(list: List[Int])(implicit ex: ExecutionContext): Future[Double] =
-    Future.sequence(
-      list map FilmRepository.findById
-    ).map(_.flatten)
-      .map(_.map(f => f.price).sum)
+  def sumFilmsPricesById(list: List[Int])(implicit ex: ExecutionContext): Future[Double] = ???
 
   /*
    * Sum the prices of all the films specified
@@ -42,8 +36,7 @@ object Step8_Futures {
    * TODO 4:
    *  - Use Future#fold to traverse the list of prices
    */
-  def sumEventualPrices(prices: List[Future[Double]])(implicit ex: ExecutionContext): Future[Double] =
-    Future.fold(prices)(0d)((acc, next) => acc + next)
+  def sumEventualPrices(prices: List[Future[Double]])(implicit ex: ExecutionContext): Future[Double] = ???
 
   /*
    * Get the films having the ids specified of the genre specified
@@ -52,27 +45,14 @@ object Step8_Futures {
    *  - Use FilmRepository#findById to retrieve each film
    *  - Use Future#sequence for List[Future] to Future[List]
    */
-  def findMoviesByGenreAndId(genre: Genre, movies: List[Int])(implicit ex: ExecutionContext): Future[List[Film]] = {
-    Future.sequence(
-      movies map FilmRepository.findById
-    ).map(_.flatten)
-      .map(_.filter(_.`type`.contains(genre)))
-  }
-
+  def findMoviesByGenreAndId(genre: Genre, movies: List[Int])(implicit ex: ExecutionContext): Future[List[Film]] = ???
   /*
    * TODO 6:
    * create 4 instances of 'Duration' of 10 seconds using different constructors
    */
   import scala.concurrent.duration._
 
-  def get4DurationsOfTenSeconds: List[Duration] = {
-    val fromTimeUnit = Duration(10, SECONDS) // from Long and TimeUnit
-    val fromLongAndString = Duration(10, "seconds") // from Long and String
-    val fromImplicit = 10 seconds // implicitly from Long, Int or Double
-    val fromString = Duration("10 s") // from String
-    List(fromTimeUnit, fromLongAndString, fromImplicit, fromString)
-  }
-
+  def get4DurationsOfTenSeconds: List[Duration] = ???
   /*
    * Return the sum of the prices having the Id specified
    * TODO 7:
@@ -80,19 +60,7 @@ object Step8_Futures {
    *  - IMPORTANT : all calls to FilmRepository#findById should be before the for-comprehension
    *  - sum the prices of the specified films
    */
-  def eventualSumFromMovieIds(firstFilmId: Int, secondFilmId: Int, thirdFilmId: Int)(implicit ex: ExecutionContext): Future[Double] = {
-    val ope1 = FilmRepository.findById(firstFilmId).map(_.map(_.price).getOrElse(0d))
-    val ope2 = FilmRepository.findById(secondFilmId).map(_.map(_.price).getOrElse(0d))
-    val ope3 = FilmRepository.findById(thirdFilmId).map(_.map(_.price).getOrElse(0d))
-    for {
-      v1 <- ope1
-      v2 <- ope2
-      v3 <- ope3
-    } yield {
-      v1 + v2 + v3
-    }
-  }
-
+  def eventualSumFromMovieIds(firstFilmId: Int, secondFilmId: Int, thirdFilmId: Int)(implicit ex: ExecutionContext): Future[Double] = ???
   /*
    * Return the sum of the prices having the Id specified
    *
@@ -102,14 +70,5 @@ object Step8_Futures {
    *  - sum the prices of the specified films
    *  - Question: What happens if we declare the futures before the for-comprehension??
    */
-  def slowEventualSumFromMoviesIds(firstFilmId: Int, secondFilmId: Int, thirdFilmId: Int)(implicit ex: ExecutionContext): Future[Double] = {
-    for {
-      v1 <- FilmRepository.slowFindById(firstFilmId).map(_.map(_.price).getOrElse(0d))
-      v2 <- FilmRepository.slowFindById(secondFilmId).map(_.map(_.price).getOrElse(0d))
-      v3 <- FilmRepository.slowFindById(thirdFilmId).map(_.map(_.price).getOrElse(0d))
-    } yield {
-      v1 + v2 + v3
-    }
-  }
-
+  def slowEventualSumFromMoviesIds(firstFilmId: Int, secondFilmId: Int, thirdFilmId: Int)(implicit ex: ExecutionContext): Future[Double] = ???
 }

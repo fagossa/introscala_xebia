@@ -13,19 +13,13 @@ object Step6_Options {
    * Return the first Option not empty from the list specified using the function
    * UserOptions#orElse
    */
-  def getUserOrElse(firstOption: Option[User], secondOption: Option[User], thirdOption: Option[User]): Option[User] =
-    orElse(
-      orElse(firstOption, secondOption),
-      thirdOption)
+  def getUserOrElse(firstOption: Option[User], secondOption: Option[User], thirdOption: Option[User]): Option[User] = ???
 
   /*
    * TODO 2:
    * If the user specified is present the his/her name, otherwise use the default value
    */
-  def getUserNameOrElse(someUser: Option[User], defaultName: String) =
-    someUser
-      .map(_.firstName)
-      .getOrElse(defaultName)
+  def getUserNameOrElse(someUser: Option[User], defaultName: String) : String = ???
 
   /*
    * TODO 3:
@@ -36,12 +30,7 @@ object Step6_Options {
    * Note:
    *   Use Option#filter
    */
-  def validUser(user: User): Option[User] = {
-    Some(user)
-      .filter(_.age <= 25)
-      .filter(_.lastName == "Lawrence")
-      .filter(_.gender.isDefined)
-  }
+  def validUser(user: User): Option[User] = ???
 
   /*
    * TODO 4:
@@ -51,27 +40,21 @@ object Step6_Options {
    *  - NotSpecified otherwise
    * Note: user pattern matching
    */
-  def translateGender(user: User): Gender = user.gender match {
-    case Some(gender) if gender == "F" => Female
-    case Some(gender) if gender == "M" => Male
-    case None => NotSpecified
-  }
+  def translateGender(user: User): Gender = ???
 
   /*
    * TODO 5:
    * - use UserRepository#findById
    * - use UserOptions#map
    */
-  def getNaiveGenderFromUserId(id: Int): Option[Option[String]] =
-    map(UserRepository.findById(id))((u) => u.gender)
+  def getNaiveGenderFromUserId(id: Int): Option[Option[String]] = ???
 
   /*
    * TODO 5:
    * - use UserRepository#findById
    * - use UserOptions#flatMap
    */
-  def getBetterGenderFromUserId(id: Int): Option[String] =
-    flatMap(UserRepository.findById(id))((u) => u.gender)
+  def getBetterGenderFromUserId(id: Int): Option[String] = ???
 
 
   /** Syntax sugar with for-comprehension **/
@@ -80,25 +63,15 @@ object Step6_Options {
    * TODO 5:
    * Use for-comprehension; we can't actually test if you
    * use it or not, but for the sake of the exercise please use it :)
+   * - call UserRepository#findById(id) and return the gender
    */
-  def getGenderFromUserIdSugared(id: Int): Option[String] =
-    for {
-      user <- UserRepository.findById(id)
-      gender <- user.gender
-    } yield gender
+  def getGenderFromUserIdSugared(id: Int): Option[String] = ???
 
   /*
    * TODO 5:
    * Get genders from UserRepository#findAll
    * Note: for-comprehension + Traversable#toSeq
    */
-  def getAllGenders: Seq[String] =
-    (
-      for {
-        users <- UserRepository.findAll
-        genders <- users.gender
-      } yield genders)
-      .toSeq
+  def getAllGenders: Seq[String] = ???
 
 }
-
