@@ -8,14 +8,14 @@ object Step1_Basics {
     TODO 1 variables
       => variable should be initialized with a value of 24... is it that simple ?
   */
-  var variable: Int = 0
+  var variable: Int = 24
 
   /*
     values are declared like variables but with val keyword
     TODO 2 values
       => value should be defined with a value of 42... keeping it simple
   */
-  val value: Int = 0
+  val value: Int = 42
 
   /*
     functions are declared like this:
@@ -23,7 +23,7 @@ object Step1_Basics {
     TODO 3 functions
       => square should return the square value of the given x argument
   */
-  def square(x: Int): Int = ???
+  def square(x: Int): Int = x * x
 
   /*
     functions can be arguments (a val or a var too) using this syntax:
@@ -31,7 +31,7 @@ object Step1_Basics {
     TODO 4 functions as parameter
       => plus21 should return f1 result + 21
   */
-  def plus21(f1: () => Int): Int = ???
+  def plus21(f1: () => Int): Int = f1() + 21
 
   /*
     functions can be returned like this:
@@ -39,7 +39,7 @@ object Step1_Basics {
     TODO 5 functions as return
       => product should return a function returning the product of its Int argument and the given x argument
   */
-  def product(x: Int): Int => Int = ???
+  def product(x: Int): Int => Int = (value) => x * value
 
   /*
     functions can be partially applied like this:
@@ -50,9 +50,9 @@ object Step1_Basics {
   */
   def fxy(x: Int, y: Int): Int = (2 * x) + (y * y)
 
-  def fx(y: Int): Int => Int = ???
+  def fx(y: Int): Int => Int = fxy(_, y)
 
-  def fy(x: Int): Int => Int = ???
+  def fy(x: Int): Int => Int = fxy(x, _)
 
   /*
     functions can be curried like this:
@@ -63,9 +63,9 @@ object Step1_Basics {
   */
   def gxy(x: Int)(y: Int): Int = (2 * x) - (y * y)
 
-  def gx(y: Int): Int => Int = ???
+  def gx(y: Int): Int => Int = gxy(_)(y)
 
-  def gy(x: Int): Int => Int = ???
+  def gy(x: Int): Int => Int = gxy(x)
 
   /*
     functions can have variable length arguments:
@@ -73,7 +73,7 @@ object Step1_Basics {
     TODO 8 variable length arguments
       => vararg should return sum of x variable length arguments
   */
-  def vararg(x: Int*): Int = ???
+  def vararg(x: Int*): Int = x.sum
 
   /*
     if/else expressions can be used to return values like this:
@@ -81,7 +81,7 @@ object Step1_Basics {
     TODO 9 if/else expressions
       => expression should return "ok" if x argument is 0, "ko" otherwise, using if/else expression
   */
-  def expression(x: Int): String = ???
+  def expression(x: Int): String = if (x == 0) "ok" else "ko"
 
   /*
     pattern matching expressions can be used to return values like this:
@@ -95,7 +95,10 @@ object Step1_Basics {
     TODO 10 pattern matching expressions
       => oddEven should return "even" if x % 2 == 0, "odd" otherwise, using pattern matching
   */
-  def oddEven(x: Int): String = ???
+  def oddEven(x: Int): String = x % 2 match {
+    case 0 => "even"
+    case notzero => "odd"
+  }
 
   /*
     exceptions are handled using pattern matching:
@@ -110,7 +113,19 @@ object Step1_Basics {
       => safeHandler should call given unsafe function and handle its exceptions
       => safeHandler should return exception's message suffixed with ":Finally"
       => when exception is of Type RuntimeException message should be prefixed with "Runtime:"
+      Note: that a nicer alternative is 'scala.util.Try'
   */
-  def safeHandler(unsafe: () => Unit): String = ???
+  def safeHandler(unsafe: () => Unit): String = {
+    var response = ""
+    try {
+      unsafe()
+    } catch {
+      case e: RuntimeException=> response += s"Runtime:${e.getMessage}"
+      case e: Exception  => response += s"${e.getMessage}"
+    } finally {
+      response += ":Finally"
+    }
+    response
+  }
 
 }

@@ -18,7 +18,7 @@ object Step4_Objects {
 
   }
 
-  def greet(): String = ???
+  def greet(): String = "RandomGreeter:" + RandomGreeter.greet
 
   /*
     object can share the same name with a class, it is then named companion object:
@@ -32,9 +32,9 @@ object Step4_Objects {
 
   object Craftsman {
 
-    def beginner(): Craftsman = ???
+    def beginner(): Craftsman = new Craftsman(0)
 
-    def check(craftsman: Craftsman): Boolean = ???
+    def check(craftsman: Craftsman): Boolean = craftsman.badges > 10
 
   }
 
@@ -52,11 +52,14 @@ object Step4_Objects {
   object Scorer {
     var count = 0
 
-    def apply() = ???
+    def apply() = count += 1
   }
 
   object DoubleScorer {
-    def apply() = ???
+    def apply() = {
+      Scorer.apply()
+      Scorer.apply()
+    }
   }
 
 }

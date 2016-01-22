@@ -11,9 +11,9 @@ object Step2_Classes {
   */
   class Greeter {
 
-    val name: String = ???
+    val name: String = "Bob"
 
-    def greetings(): String = ???
+    def greetings(): String = s"Hello my name is $name"
 
   }
 
@@ -28,7 +28,7 @@ object Step2_Classes {
   */
   class UserWithName(val name: String) {
 
-    def greetings(): String = ???
+    def greetings(): String = s"Hello my name is $name"
 
   }
 
@@ -43,7 +43,7 @@ object Step2_Classes {
   */
   class UserWithNameAndAge(name: String, val age: Int) extends UserWithName(name) {
 
-    override def greetings(): String = ???
+    override def greetings(): String = super.greetings() + s", I am $age years old"
 
   }
 
@@ -54,7 +54,7 @@ object Step2_Classes {
     TODO 4 visibility
       => password field should be marked as private
   */
-  class UserWithPassword(val password: String) {}
+  class UserWithPassword(private val password: String) {}
 
   /*
     case classes is a shortcut declaration for classes powered with equals and toString using given fields:
@@ -66,9 +66,9 @@ object Step2_Classes {
   */
   case class Item(name: String, price: Int) {}
 
-  def itemAsString(item: Item): String = ???
+  def itemAsString(item: Item): String = item.toString
 
-  def compare(item1: Item, item2: Item): Boolean = ???
+  def compare(item1: Item, item2: Item): Boolean = item1 == item2
 
   /*
     case classes can benefit a lot from pattern matching:
@@ -83,6 +83,10 @@ object Step2_Classes {
         - 1 point for Item with name matching "Beer(.*)" at any price
         - 0 points otherwise
   */
-  def fidelity(item: Item): Int = ???
+  def fidelity(item: Item): Int = item match {
+    case Item("Beer", price) if price > 5 => 2
+    case Item(name, _) if name.matches("Beer(.*)") => 1
+    case other: Item => 0
+  }
 
 }
