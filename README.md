@@ -1,5 +1,42 @@
+How to build and run the test?
+=============
 
-# List
+## - When you already have scala installed 
+
+The simplest way to work with the exercises is to get to SBT's REPL:
+
+    ./activator
+    
+Once inside, In order to execute the whole test set: 
+
+    > test
+    
+If you want to run only one test, just type this:
+
+    > testOnly fr.xebia.scala.StepXXX
+
+## - Dunno what scalac Is :( BUT I already have docker installed!
+
+You can compile and run the test inside a docker container specified
+by doing the following:
+
+### Build the image by using the following command
+
+    ./activator buildScalaSources
+    
+### Get into the docker container
+
+You need to create the docker _run command_ according to your own _ivy repository_.
+In order to do it you need to execute the following commands
+
+    ./activator makeBashFileToTest
+    
+    ./runTestInDocker.sh
+
+Help with the syntax
+=============
+
+## List
 
 There are several ways to create list in scala.
 
@@ -10,7 +47,7 @@ There are several ways to create list in scala.
 `val list = 1 :: 2 :: 3 :: Nil`
 
 
-## How to traverse a list
+### How to traverse a list
 
 Traversing a list means we need to handle at least two special cases:
 
@@ -30,10 +67,10 @@ The easiest way to handle those cases is by using a pattern matching on the list
         head + sum(tail) 
     }
 
-# Currying
+## Currying
 
 
-## Currifying an existing function
+### Currifying an existing function
 
 Lets imagine that we have the following function
 
@@ -53,8 +90,7 @@ function into a `curried function`. So, by doing this
 We included different examples that hopefully will help you to identify the advantages/disadvantages from the following
 equivalent alternatives:
 
-* Either`
+* _Either_ in Scala
 
-* Cats `Xor`
+* _Xor_ in Cats
 
-* ScalaZ `\/-` and `-\/
