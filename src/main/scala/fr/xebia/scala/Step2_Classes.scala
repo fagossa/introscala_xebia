@@ -86,7 +86,7 @@ object Step2_Classes {
   def fidelity(item: Item): Int = item match {
     case Item("Beer", price) if price > 5 => 2
     case Item(name, _) if name.matches("Beer(.*)") => 1
-    case other: Item => 0
+    case _ => 0
   }
 
 }

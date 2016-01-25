@@ -1,6 +1,5 @@
 package fr.xebia.scala
 
-import fr.xebia.scala.control.OptionTools._
 import fr.xebia.scala.model.Gender.{Female, Male, NotSpecified}
 import fr.xebia.scala.model.{Gender, User, UserRepository}
 
@@ -14,13 +13,11 @@ object Step6_Options {
    * UserOptions#orElse
    */
   def getUserOrElse(firstOption: Option[User], secondOption: Option[User], thirdOption: Option[User]): Option[User] =
-    orElse(
-      orElse(firstOption, secondOption),
-      thirdOption)
+    firstOption.orElse(secondOption.orElse(thirdOption))
 
   /*
    * TODO 2:
-   * If the user specified is present the his/her name, otherwise use the default value
+   * If the user specified is present the firstname name, otherwise use the default value
    */
   def getUserNameOrElse(someUser: Option[User], defaultName: String) =
     someUser
@@ -31,17 +28,16 @@ object Step6_Options {
    * TODO 3:
     *  valid user means the following criteria:
    *   - age <= 25
-   *   - called "Lawrence"
+   *   - with lastName "Lawrence"
    *   - with a specified gender
    * Note:
    *   Use Option#filter
    */
-  def validUser(user: User): Option[User] = {
+  def validUser(user: User): Option[User] =
     Some(user)
       .filter(_.age <= 25)
       .filter(_.lastName == "Lawrence")
       .filter(_.gender.isDefined)
-  }
 
   /*
    * TODO 4:
@@ -52,9 +48,9 @@ object Step6_Options {
    * Note: user pattern matching
    */
   def translateGender(user: User): Gender = user.gender match {
-    case Some(gender) if gender == "F" => Female
-    case Some(gender) if gender == "M" => Male
-    case None => NotSpecified
+    case Some("F") => Female
+    case Some("M") => Male
+    case _ => NotSpecified
   }
 
   /*
@@ -63,7 +59,7 @@ object Step6_Options {
    * - use UserOptions#map
    */
   def getNaiveGenderFromUserId(id: Int): Option[Option[String]] =
-    map(UserRepository.findById(id))((u) => u.gender)
+    UserRepository.findById(id).map(_.gender)
 
   /*
    * TODO 5:
@@ -71,7 +67,7 @@ object Step6_Options {
    * - use UserOptions#flatMap
    */
   def getBetterGenderFromUserId(id: Int): Option[String] =
-    flatMap(UserRepository.findById(id))((u) => u.gender)
+    UserRepository.findById(id).flatMap(_.gender)
 
 
   /** Syntax sugar with for-comprehension **/
@@ -80,6 +76,7 @@ object Step6_Options {
    * TODO 5:
    * Use for-comprehension; we can't actually test if you
    * use it or not, but for the sake of the exercise please use it :)
+   * - call UserRepository#findById(id) and return the gender
    */
   def getGenderFromUserIdSugared(id: Int): Option[String] =
     for {
@@ -101,4 +98,3 @@ object Step6_Options {
       .toSeq
 
 }
-

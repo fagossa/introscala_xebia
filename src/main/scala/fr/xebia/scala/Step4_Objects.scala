@@ -57,8 +57,8 @@ object Step4_Objects {
 
   object DoubleScorer {
     def apply() = {
-      Scorer.apply()
-      Scorer.apply()
+      Scorer()
+      Scorer()
     }
   }
 

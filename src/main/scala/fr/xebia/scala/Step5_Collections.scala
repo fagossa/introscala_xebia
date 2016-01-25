@@ -11,7 +11,7 @@ object Step5_Collections {
    * TODO 1: basic filter
    */
   def getFilmsMadeBy(director: Director, films: List[Film]): List[Film] =
-    films.filter(f => f.director == director)
+    films.filter(_.director == director)
 
   /*
    * Get the films directed only by the director specified
@@ -20,7 +20,7 @@ object Step5_Collections {
    * information.
    */
   def filterFilmsWithDirector(films: List[Film])(director: Director): List[Film] =
-    films.filter(f => f.director == director)
+    films.filter(_.director == director)
 
   /*
    * Get the films using the filter specified
@@ -51,13 +51,13 @@ object Step5_Collections {
    */
   def sumPricesWithRecursion(films: List[Film]): Double = {
     @tailrec
-    def go(films: List[Film], sum: Double): Double = {
+    def sumPrices(films: List[Film], sum: Double): Double = {
       films match {
         case Nil => sum
-        case head :: tail => go(tail, head.price + sum)
+        case head :: tail => sumPrices(tail, head.price + sum)
       }
     }
-    go(films, 0)
+    sumPrices(films, 0)
   }
 
   /*
@@ -69,31 +69,28 @@ object Step5_Collections {
    * - 50% reduction if price is both multiple of 5 and 3
    * - 0% reduction otherwise
    */
-  def discounts(films: List[Film]): List[Double] = films match {
-    case Nil => Nil
-    case h :: t => (h.price % 3 == 0, h.price % 5 == 0) match {
-      case (true, false) => List(h.price * 0.35) ++ discounts(t)
-      case (false, true) => List(h.price * 0.4) ++ discounts(t)
-      case (true, true) => List(h.price * 0.5) ++ discounts(t)
-      case (_, _) => List(h.price) ++ discounts(t)
-    }
-  }
+  def discounts(films: List[Film]): List[Double] = films.map(_.price).map(_ match {
+    case p if p % 3 == 0 && p % 5 == 0 => 0.5 * p
+    case p if p % 3 == 0 => 0.35 * p
+    case p if p % 5 == 0 => 0.4 * p
+    case p => p
+  })
 
   /*
    * TODO 8: use 'foldLeft' (which in fact is a curried function) to get the sum of prices
    */
   def sumPricesWithFolding(films: List[Film]): Double =
-    films.foldLeft(0d)((r, c) => r + c.price)
+    films.foldLeft(0d)((total, film) => total + film.price)
 
   /*
    * TODO 9: Delete duplicate consecutive numbers using foldLeft
    */
   def deleteConsecutiveDuplicates(allFilms: List[Film]): List[Film] =
-    allFilms.foldLeft(List.empty[Film])((acc, next) =>
-      if (acc.contains(next)) {
-        acc
+    allFilms.foldLeft(List.empty[Film])((filmList, film) =>
+      if (filmList.contains(film)) {
+        filmList
       } else {
-        acc ++ List(next)
+        filmList ++ List(film)
       }
     )
 

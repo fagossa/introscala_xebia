@@ -44,14 +44,14 @@ object ScalaOption {
    * chain them using 'andThen'
    */
   def validateFilm(film: Film): Option[Film] =
-    (validateReleaseDate andThen validatePrice andThen validateGenre) (Some(film))
+    validateReleaseDate.andThen(validatePrice).andThen(validateGenre)(Some(film))
 
 }
 
 object ScalaEither {
 
   /*
-   * Either can also be used to validate data. As with options we have to values:
+   * Either can also be used to validate data. As with options we have two values:
    * 'Left' and 'Right'
    *
    * Where:
@@ -73,33 +73,21 @@ object ScalaEither {
    * Validates if releaseYear <= 1980 otherwise NotOldEnough
    */
   private def validateReleaseDate(film: Film): Either[FailureReason, Film] =
-    if (film.releaseYear <= 1980) {
-      Right(film)
-    } else {
-      Left(NotOldEnough)
-    }
+    if (film.releaseYear <= 1980) Right(film) else Left(NotOldEnough)
 
   /*
    * TODO 2_2:
    * Validates if price <= 3 otherwise TooExpensive
    */
   private def validatePrice(film: Film): Either[FailureReason, Film] =
-    if (film.price <= 3) {
-      Right(film)
-    } else {
-      Left(TooExpensive)
-    }
+    if (film.price <= 3) Right(film) else Left(TooExpensive)
 
   /*
    * TODO 2_3:
    * Validates if 'type' contains Crime otherwise BoringFilm
    */
   def validateGenre(film: Film): Either[FailureReason, Film] =
-    if (film.`type`.contains(Crime)) {
-      Right(film)
-    } else {
-      Left(BoringFilm)
-    }
+    if (film.`type`.contains(Crime)) Right(film) else Left(BoringFilm)
 
   /*
    * TODO 2:
@@ -111,10 +99,10 @@ object ScalaEither {
    */
   def validateFilm(film: Film): Either[FailureReason, Film] =
     for {
-      e1 <- validateReleaseDate(film).right
-      e2 <- validatePrice(e1).right
-      e3 <- validateGenre(e2).right
-    } yield e3
+      oldEnoughFilm <- validateReleaseDate(film).right
+      cheapEnoughFilm <- validatePrice(film).right
+      thrillerFilm <- validateGenre(film).right
+    } yield thrillerFilm
 
 }
 
@@ -138,31 +126,19 @@ object CatsXor {
    * TODO 3_1: Validates if releaseYear <= 1980 otherwise NotOldEnough
    */
   private def validateReleaseDate(film: Film): Xor[FailureReason, Film] =
-    if (film.releaseYear <= 1980) {
-      Xor.right(film)
-    } else {
-      Xor.left(NotOldEnough)
-    }
+    if (film.releaseYear <= 1980) Xor.right(film) else Xor.left(NotOldEnough)
 
   /*
    * TODO 3_2: Validates if price <= 3 otherwise TooExpensive
    */
   private def validatePrice(film: Film): FailureReason Xor Film =
-    if (film.price <= 3) {
-      Xor.right(film)
-    } else {
-      Xor.left(TooExpensive)
-    }
+    if (film.price <= 3) Xor.right(film) else Xor.left(TooExpensive)
 
   /*
    * TODO 3_2: Validates if 'type' contains Crime otherwise BoringFilm
    */
   def validateGenre(film: Film): FailureReason Xor Film =
-    if (film.`type`.contains(Crime)) {
-      Xor.right(film)
-    } else {
-      Xor.left(BoringFilm)
-    }
+    if (film.`type`.contains(Crime)) Xor.right(film) else Xor.left(BoringFilm)
 
   /*
    * TODO 3: we validate error using a fail fast approach in a for-comprehension:
@@ -171,12 +147,11 @@ object CatsXor {
    *
    * Xor is right based, so there is no method 'right' to call after each validation
    */
-  def validateFilm(film: Film): Xor[FailureReason, Film] = {
+  def validateFilm(film: Film): Xor[FailureReason, Film] =
     for {
-      e1 <- validateReleaseDate(film)
-      e2 <- validatePrice(e1)
-      e3 <- validateGenre(e2)
-    } yield e3
-  }
+      oldEnoughFilm <- validateReleaseDate(film)
+      cheapEnoughFilm <- validatePrice(film)
+      thrillerFilm <- validateGenre(film)
+    } yield thrillerFilm
 
 }

@@ -39,7 +39,7 @@ object Step1_Basics {
     TODO 5 functions as return
       => product should return a function returning the product of its Int argument and the given x argument
   */
-  def product(x: Int): Int => Int = (value) => x * value
+  def product(x: Int): Int => Int = y => x * y
 
   /*
     functions can be partially applied like this:
@@ -97,7 +97,7 @@ object Step1_Basics {
   */
   def oddEven(x: Int): String = x % 2 match {
     case 0 => "even"
-    case notzero => "odd"
+    case _ => "odd"
   }
 
   /*
@@ -120,8 +120,8 @@ object Step1_Basics {
     try {
       unsafe()
     } catch {
-      case e: RuntimeException=> response += s"Runtime:${e.getMessage}"
-      case e: Exception  => response += s"${e.getMessage}"
+      case e: RuntimeException => response = s"Runtime:${e.getMessage}"
+      case e: Exception => response = e.getMessage
     } finally {
       response += ":Finally"
     }

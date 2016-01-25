@@ -10,20 +10,18 @@ object CollectionTools {
     */
   def filter[A](list: List[A], withFilter: A => Boolean): List[A] = list match {
     case Nil => Nil
-    case h :: t if withFilter(h) => List(h) ++ filter(t, withFilter)
-    case h :: t => filter(t, withFilter)
+    case head :: tail if withFilter(head) => head :: filter(tail, withFilter)
+    case head :: tail => filter(tail, withFilter)
   }
 
   /*
     * TODO 10:
     * creates a tuple from each pair of elements
     */
-  def zip[A, B](first: List[A], second: List[B]): List[(A, B)] = {
-    (first, second) match {
-      case (Nil, Nil) => Nil
-      case (h1 :: t1, h2 :: t2) => List((h1, h2)) ++ zip(t1, t2)
-      case (_, _) => Nil
-    }
+  def zip[A, B](first: List[A], second: List[B]): List[(A, B)] = (first, second) match {
+    case (Nil, Nil) => Nil
+    case (head1 :: tail1, head2 :: tail2) => (head1, head2) :: zip(tail1, tail2)
+    case (_, _) => Nil
   }
 
   /*
@@ -31,15 +29,12 @@ object CollectionTools {
     * creates a tuple from each pair of elements keeping the index
     */
   def zipWithIndex[A](first: List[A]): List[(A, Int)] = {
-    def go(elements: List[A], index: Int): List[(A, Int)] = {
-      elements match {
-        case (Nil) => Nil
-        case (h1 :: t1) => List((h1, index)) ++ go(t1, index + 1)
-      }
+    def zipWithIndexRec(first: List[A], n: Int): List[(A, Int)] = first match {
+      case Nil => Nil
+      case head :: tail => (head, n) :: zipWithIndexRec(tail, n + 1)
     }
-    go(first, 0)
+    zipWithIndexRec(first, 0)
   }
-
 
   /*
     * TODO 11:
@@ -47,14 +42,12 @@ object CollectionTools {
     */
   def fillList[A](qty: Int)(element: A): List[A] = {
     @tailrec
-    def go(list: List[A], current: Int): List[A] = {
-      list match {
-        case h :: t if qty == 0 => Nil
-        case h :: t if current < qty => go(list ++ List(element), current + 1)
-        case h :: t => list
-      }
+    def fillListRec(list: List[A], current: Int): List[A] = list match {
+      case h :: t if qty == 0 => Nil
+      case h :: t if current < qty => fillListRec(list ++ List(element), current + 1)
+      case h :: t => list
     }
-    go(List(element), 1)
+    fillListRec(List(element), 1)
   }
 
 }
