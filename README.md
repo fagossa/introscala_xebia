@@ -114,16 +114,14 @@ Options atre strongly typed containers to represent a potentially "null" value. 
 
 You can verify its value by the following means:
 
-- Pattern matching: 
-
+#### Pattern matching: 
 
     num2 match {
       case Some(actualValue) => println(actualValue)
       case None => println("No value")
     }
 
-- Getting a default value
-
+#### Getting a default value
 
     val result1 = num2.getOrElse(0)
     val result2 = num2.get // may fail if value not present
@@ -157,5 +155,3 @@ Scal's wrapper for futures operations
       case Failure(ex) =>
         println(s"Houston, we got a problem: ${ex.getMessage}")
     }
-
------
