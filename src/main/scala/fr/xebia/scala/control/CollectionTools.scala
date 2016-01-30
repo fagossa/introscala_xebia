@@ -1,7 +1,5 @@
 package fr.xebia.scala.control
 
-import scala.annotation.tailrec
-
 object CollectionTools {
 
   /*

@@ -1,8 +1,10 @@
 package fr.xebia.scala
 
-import fr.xebia.scala.model.{FilmRepository, Film, Genre}
+import fr.xebia.scala.model.{Film, Genre}
 
 import scala.concurrent.{ExecutionContext, Future}
+
+import scala.concurrent.duration._
 
 object Step8_Futures {
 
@@ -50,8 +52,6 @@ object Step8_Futures {
    * TODO 6:
    * create 4 instances of 'Duration' of 10 seconds using different constructors
    */
-  import scala.concurrent.duration._
-
   def get4DurationsOfTenSeconds: List[Duration] = ???
   /*
    * Return the sum of the prices having the Id specified
@@ -66,7 +66,7 @@ object Step8_Futures {
    *
    * TODO 8:
    *  - Use for-comprehension
-   *  - IMPORTANT : all calls to FilmRepository#findById should be inside the for-comprehension
+   *  - IMPORTANT : all calls to FilmRepository#slowFindById should be inside the for-comprehension
    *  - sum the prices of the specified films
    *  - Question: What happens if we declare the futures before the for-comprehension??
    */

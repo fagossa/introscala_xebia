@@ -110,6 +110,7 @@ object Step1_Basics {
       => safeHandler should call given unsafe function and handle its exceptions
       => safeHandler should return exception's message suffixed with ":Finally"
       => when exception is of Type RuntimeException message should be prefixed with "Runtime:"
+      Note: that a nicer alternative is 'scala.util.Try'
   */
   def safeHandler(unsafe: () => Unit): String = ???
 

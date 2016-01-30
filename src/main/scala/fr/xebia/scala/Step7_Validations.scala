@@ -47,7 +47,7 @@ object ScalaOption {
 object ScalaEither {
 
   /*
-   * Either can also be used to validate data. As with options we have to values:
+   * Either can also be used to validate data. As with options we have two values:
    * 'Left' and 'Right'
    *
    * Where:

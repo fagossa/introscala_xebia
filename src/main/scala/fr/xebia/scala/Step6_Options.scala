@@ -1,8 +1,6 @@
 package fr.xebia.scala
 
-import fr.xebia.scala.control.OptionTools._
-import fr.xebia.scala.model.Gender.{Female, Male, NotSpecified}
-import fr.xebia.scala.model.{Gender, User, UserRepository}
+import fr.xebia.scala.model.{Gender, User}
 
 object Step6_Options {
 
@@ -17,7 +15,7 @@ object Step6_Options {
 
   /*
    * TODO 2:
-   * If the user specified is present the his/her name, otherwise use the default value
+   * If the user specified is present the firstname name, otherwise use the default value
    */
   def getUserNameOrElse(someUser: Option[User], defaultName: String) : String = ???
 
@@ -25,7 +23,7 @@ object Step6_Options {
    * TODO 3:
     *  valid user means the following criteria:
    *   - age <= 25
-   *   - called "Lawrence"
+   *   - with lastName "Lawrence"
    *   - with a specified gender
    * Note:
    *   Use Option#filter
