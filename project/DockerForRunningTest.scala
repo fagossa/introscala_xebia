@@ -38,7 +38,7 @@ object DockerForRunningTest {
 
     val contents = List(
       "#!/bin/bash",
-      s"docker run --name xebia_introscala -it -v $basedir:/tmp/scala_exercises -v /var/run/docker.sock:/var/run/docker.sock -v $home/.sbt/:/root/.sbt -v $home/.ivy2/:/root/.ivy2 xebia/scala_exercises ./activator"
+      s"docker run --name xebia_introscala -it -v $basedir:/tmp/scala_exercises -v /var/run/docker.sock:/var/run/docker.sock -v $home/.sbt/:/root/.sbt -v $home/.ivy2/:/root/.ivy2 xebia/scala_exercises /bin/sh -C /tmp/scala_exercises/; ./activator"
     )
     cleanly {
       new PrintWriter(new File("runTestInDocker.sh"))
