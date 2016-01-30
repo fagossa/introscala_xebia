@@ -1,9 +1,5 @@
 package fr.xebia.scala.model
 
-import fr.xebia.scala.control.CollectionTools
-
-import scala.annotation.tailrec
-
 /*
  * A sealed trait can be extended only in the same file as its declaration.
  */
