@@ -1,9 +1,5 @@
 package fr.xebia.scala.model
 
-import fr.xebia.scala.control.OptionTools
-import fr.xebia.scala.model.Gender.{NotSpecified, Female, Male}
-import OptionTools._
-
 case class User(
                  id: Int,
                  firstName: String,

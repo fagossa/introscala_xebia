@@ -1,6 +1,5 @@
 package fr.xebia.scala
 
-import fr.xebia.scala.control.PriceCalculations
 import fr.xebia.scala.model.Director._
 import fr.xebia.scala.model.Genre._
 import fr.xebia.scala.model.{Film, MockFilmData}
@@ -95,12 +94,6 @@ class Step5_CollectionSpec extends FunSpec with MockFilmData with Matchers {
       Step5_Collections.zipWithIndex(List.empty[Film]) shouldBe List.empty
       Step5_Collections.zipWithIndex(List(ran)) shouldBe List((ran, 0))
       Step5_Collections.zipWithIndex(List(ran, rashomon)) shouldBe List((ran, 0), (rashomon, 1))
-    }
-
-    it("should use films List#zip TODO 11") {
-      PriceCalculations.calculateTotalPrice(List.empty[Film], List(3, 5)) shouldBe None
-      PriceCalculations.calculateTotalPrice(kurosawaFilms, List.empty) shouldBe None
-      PriceCalculations.calculateTotalPrice(kurosawaFilms, List(3, 5)) shouldBe Some(21.9)
     }
 
     it("should implement fill method TODO 12") {
