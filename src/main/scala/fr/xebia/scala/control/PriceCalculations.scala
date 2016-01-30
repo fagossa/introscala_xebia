@@ -1,5 +1,6 @@
 package fr.xebia.scala.control
 
+import fr.xebia.scala.Step5_Collections
 import fr.xebia.scala.model.Film
 
 object PriceCalculations {
@@ -11,7 +12,7 @@ object PriceCalculations {
   def calculateTotalPrice(films: List[Film], qty: List[Int]): Option[Double] =
     if (films.size == qty.size) {
       Some {
-        CollectionTools.zip(films, qty)
+        Step5_Collections.zip(films, qty)
           .map { case (film, amt) => film.price * amt }
           .sum
       }
@@ -26,7 +27,7 @@ object PriceCalculations {
   def calculateTotalPriceWithIndex(films: List[Film], qty: List[Int]): Option[List[(Int, Double)]] =
     if (films.size == qty.size) {
       Some {
-        CollectionTools.zipWithIndex(CollectionTools.zip(films, qty))
+        Step5_Collections.zipWithIndex(Step5_Collections.zip(films, qty))
           .map { case ((f: Film, qty: Int), index) => (index, f.price * qty) }
       }
     } else {
