@@ -1,9 +1,6 @@
 package fr.xebia.scala
 
-import fr.xebia.scala.control.CollectionTools
 import fr.xebia.scala.model.{Film, Director}
-
-import scala.annotation.tailrec
 
 object Step5_Collections {
 
