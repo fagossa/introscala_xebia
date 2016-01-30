@@ -1,4 +1,5 @@
 target/
 .idea/
-project/
+project/target/
+project/project/
 .DS_Store
