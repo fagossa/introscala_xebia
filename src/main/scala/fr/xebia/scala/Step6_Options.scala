@@ -15,7 +15,7 @@ object Step6_Options {
 
   /*
    * TODO 2:
-   * If the user specified is present the firstname name, otherwise use the default value
+   * If the user specified is present the first name, otherwise use the default value
    */
   def getUserNameOrElse(someUser: Option[User], defaultName: String) : String = ???
 
