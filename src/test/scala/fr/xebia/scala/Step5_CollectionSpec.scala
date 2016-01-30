@@ -103,7 +103,7 @@ class Step5_CollectionSpec extends FunSpec with MockFilmData with Matchers {
       PriceCalculations.calculateTotalPrice(kurosawaFilms, List(3, 5)) shouldBe Some(21.9)
     }
 
-    it("should implement fill method TODO 11") {
+    it("should implement fill method TODO 12") {
       Step5_Collections.fillList(0)(ran) shouldBe Nil
       Step5_Collections.fillList(1)(ran) shouldBe List(ran)
       Step5_Collections.fillList(3)(ran) shouldBe List(ran, ran, ran)
