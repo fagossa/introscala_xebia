@@ -1,5 +1,6 @@
 package fr.xebia.scala
 
+import fr.xebia.scala.control.OptionTools
 import fr.xebia.scala.model.Gender.{Female, Male, NotSpecified}
 import fr.xebia.scala.model.{Gender, User, UserRepository}
 
@@ -13,7 +14,7 @@ object Step6_Options {
    * UserOptions#orElse
    */
   def getUserOrElse(firstOption: Option[User], secondOption: Option[User], thirdOption: Option[User]): Option[User] =
-    firstOption.orElse(secondOption.orElse(thirdOption))
+    OptionTools.orElse(OptionTools.orElse(firstOption, secondOption), thirdOption)
 
   /*
    * TODO 2:
@@ -59,7 +60,7 @@ object Step6_Options {
    * - use UserOptions#map
    */
   def getNaiveGenderFromUserId(id: Int): Option[Option[String]] =
-    UserRepository.findById(id).map(_.gender)
+    OptionTools.map(UserRepository.findById(id))(_.gender)
 
   /*
    * TODO 5:
@@ -67,7 +68,7 @@ object Step6_Options {
    * - use UserOptions#flatMap
    */
   def getBetterGenderFromUserId(id: Int): Option[String] =
-    UserRepository.findById(id).flatMap(_.gender)
+    OptionTools.flatMap(UserRepository.findById(id))(_.gender)
 
 
   /** Syntax sugar with for-comprehension **/
