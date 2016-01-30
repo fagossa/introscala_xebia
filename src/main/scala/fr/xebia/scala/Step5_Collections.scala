@@ -32,10 +32,10 @@ object Step5_Collections {
    * => filter should return a list of film matching the given predicate, using pattern matching
    * note: you can use pattern matching on a list like this "case head :: tail => ..."
    */
-  def filter[A](list: List[A])(withFilter: A => Boolean): List[A] = list match {
+  def filter(films: List[Film])(withCustomFilter: Film => Boolean): List[Film] = films match {
     case Nil => Nil
-    case head :: tail if withFilter(head) => head :: filter(tail)(withFilter)
-    case head :: tail => filter(tail)(withFilter)
+    case head :: tail if withCustomFilter(head) => head :: filter(tail)(withCustomFilter)
+    case head :: tail => filter(tail)(withCustomFilter)
   }
 
   /*

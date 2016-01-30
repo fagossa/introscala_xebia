@@ -11,15 +11,15 @@ object Step6_Options {
    * TODO 1: option
    * => getUserOrElse should return the first non empty option between first, second and third options (use if else expression)
    */
-  def getUserOrElse(firstOption: Option[User], secondOption: Option[User], thirdOption: Option[User]): Option[User] =
-    if (firstOption.isDefined) firstOption else if (secondOption.isDefined) secondOption else thirdOption
+  def getUserOrElse(option1: Option[User], option2: Option[User], option3: Option[User]): Option[User] =
+    if (option1.isDefined) option1 else if (option2.isDefined) option2 else option3
 
   /*
    * TODO 2: option and mapping
    * => getUserNameOrElse should return user's name if present, defaultName otherwise
    */
-  def getUserNameOrElse(someUser: Option[User], defaultName: String) =
-    someUser.map(_.firstName).getOrElse(defaultName)
+  def getUserNameOrElse(userOption: Option[User], defaultName: String): String =
+    userOption.map(_.firstName).getOrElse(defaultName)
 
   /*
    * TODO 3: option filtering
@@ -51,27 +51,19 @@ object Step6_Options {
 
   /*
    * TODO 5: option of options
-   * => map should return an Option of B using given mapper applied to maybe if defined, None otherwise
-   * => getNaiveGenderFromUserId should use previous map function to return an Option[Option[String]] containing user's gender
+   * => getNaiveGenderFromUserId should return an Option[Option[String]] containing user's gender for the user corresponding to the given id
    * note: use UserRepository#findById to retrieve the user
    */
-  def map[A, B](maybe: Option[A])(mapper: A => B): Option[B] =
-    if (maybe.isDefined) Some(mapper(maybe.get)) else None
-
   def getNaiveGenderFromUserId(id: Int): Option[Option[String]] =
-    map(UserRepository.findById(id))(_.gender)
+    UserRepository.findById(id).map(_.gender)
 
   /*
    * TODO 5: option flat map
-   * => flatMap should return an Option of B using given mapper applied to maybe if defined, None otherwise
-   * => getBetterGenderFromUserId should use previous flatMap function to return an Option[String] containing user's gender
-   * note: use UserRepository#findById to retrieve the user
+   * => getBetterGenderFromUserId should return a gender Option for the user corresponding to the given id
+   * note: use Option#findById to retrieve the user
    */
-  def flatMap[A, B](maybe: Option[A])(mapper: A => Option[B]): Option[B] =
-    if (maybe.isDefined) mapper(maybe.get) else None
-
   def getBetterGenderFromUserId(id: Int): Option[String] =
-    flatMap(UserRepository.findById(id))(_.gender)
+    UserRepository.findById(id).flatMap(_.gender)
 
 
   /** Syntax sugar with for-comprehension **/
@@ -136,4 +128,5 @@ object Step6_Options {
     } else {
       None
     }
+
 }

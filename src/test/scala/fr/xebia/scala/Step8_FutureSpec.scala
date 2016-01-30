@@ -1,15 +1,16 @@
 package fr.xebia.scala
 
 import fr.xebia.scala.model.Genre.War
-import fr.xebia.scala.model.{FilmRepository, Film, MockFilmData}
+import fr.xebia.scala.model.{Film, FilmRepository, MockFilmData}
 import org.scalatest.concurrent.{Eventually, Futures, ScalaFutures}
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{FunSpec, Matchers}
 
+import scala.language.postfixOps
 import scala.util.{Failure, Success}
 
 class Step8_FutureSpec extends FunSpec with MockFilmData
-with Matchers with Futures with Eventually {
+  with Matchers with Futures with Eventually {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -125,6 +126,10 @@ with Matchers with Futures with Eventually {
         // then
         Await.result(eventualSum, duration) shouldBe 9.5
       }
+    }
+
+    it("should congratulate those who did all the exercises seriously !") {
+      Step8_Futures.thatIsAllFolks() shouldBe "Congrats !"
     }
 
   }

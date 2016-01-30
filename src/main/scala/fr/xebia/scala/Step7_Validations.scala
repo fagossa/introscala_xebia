@@ -38,7 +38,7 @@ object ScalaOption {
    * TODO 1_3: validate genre
    * => validateGenre should filter return a defined Option if 'type' contains Crime, empty Option otherwise
    */
-  def validateGenre: FilmValidation = (maybeFilm) =>
+  private def validateGenre: FilmValidation = (maybeFilm) =>
     maybeFilm.filter(_.`type`.contains(Crime))
 
   /*
@@ -55,11 +55,11 @@ object ScalaEither {
 
   /*
    * Either can also be used to validate data. As with options we have two values:
-   * 'Left' and 'Right' // in the dark cf. https://goo.gl/M0NGCz
+   * 'Left' and 'Right'
    *
    * Where:
    *  - Left, allows to represent the erroneous case
-   *  - Right, is the success case, yeah dude that's right cf. http://goo.gl/kufxDA
+   *  - Right, is the success case, cf. http://goo.gl/kufxDA
    *
    * The advantage over options is that the Left case can handle the error cause.
    *
@@ -90,7 +90,7 @@ object ScalaEither {
    * => validatePrice should return a Right[Film] if 'type' contains Crime, Left[BoringFilm] otherwise
    * Validates if 'type' contains Crime otherwise BoringFilm
    */
-  def validateGenre(film: Film): Either[FailureReason, Film] =
+  private def validateGenre(film: Film): Either[FailureReason, Film] =
     if (film.`type`.contains(Crime)) Right(film) else Left(BoringFilm)
 
   /*
@@ -142,7 +142,7 @@ object CatsXor {
    * TODO 3_2: validate genre
    * => validateReleaseDate should return a Xor.right[Film] if 'type' contains Crime, Xor.left[BoringFilm] otherwise
    */
-  def validateGenre(film: Film): FailureReason Xor Film =
+  private def validateGenre(film: Film): FailureReason Xor Film =
     if (film.`type`.contains(Crime)) Xor.right(film) else Xor.left(BoringFilm)
 
   /*
