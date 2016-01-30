@@ -21,27 +21,30 @@ object ScalaOption {
   type FilmValidation = Option[Film] => Option[Film]
 
   /*
-   * TODO 1_1: Validates if releaseYear <= 1980
+   * TODO 1_1: validate releaseYear
+   * => validateReleaseDate should return a defined Option if releaseYear <= 1980, empty Option otherwise
    */
   private def validateReleaseDate: FilmValidation = (maybeFilm) =>
     maybeFilm.filter(_.releaseYear <= 1980)
 
   /*
-   * TODO 1_2: Validates if price <= 3
+   * TODO 1_2: validate price
+   * => validatePrice should filter return a defined Option if price <= 3, empty Option otherwise
    */
   private def validatePrice: FilmValidation = (maybeFilm) =>
     maybeFilm.filter(_.price <= 3)
 
   /*
-   * TODO 1_3: Validates if 'type' contains Crime
+   * TODO 1_3: validate genre
+   * => validateGenre should filter return a defined Option if 'type' contains Crime, empty Option otherwise
    */
   def validateGenre: FilmValidation = (maybeFilm) =>
     maybeFilm.filter(_.`type`.contains(Crime))
 
   /*
-   * TODO 1:
-   * call functions validateReleaseDate -> validatePrice -> validateGenre and
-   * chain them using 'andThen'
+   * TODO 1: chaining validations
+   * => validateFilm should return a defined Option if film passes all previous validations, empty Option otherwise
+   * note: use Option#andThen to chain calls
    */
   def validateFilm(film: Film): Option[Film] =
     validateReleaseDate.andThen(validatePrice).andThen(validateGenre)(Some(film))
@@ -52,11 +55,11 @@ object ScalaEither {
 
   /*
    * Either can also be used to validate data. As with options we have two values:
-   * 'Left' and 'Right'
+   * 'Left' and 'Right' // in the dark cf. https://goo.gl/M0NGCz
    *
    * Where:
    *  - Left, allows to represent the erroneous case
-   *  - Right, is the success case
+   *  - Right, is the success case, yeah dude that's right cf. http://goo.gl/kufxDA
    *
    * The advantage over options is that the Left case can handle the error cause.
    *
@@ -69,33 +72,32 @@ object ScalaEither {
    */
 
   /*
-   * TODO 2_1:
-   * Validates if releaseYear <= 1980 otherwise NotOldEnough
+   * TODO 2_1: validate releaseYear
+   * => validateReleaseDate should return a Right[Film] if releaseYear <= 1980, Left[NotOldEnough] otherwise
    */
   private def validateReleaseDate(film: Film): Either[FailureReason, Film] =
     if (film.releaseYear <= 1980) Right(film) else Left(NotOldEnough)
 
   /*
-   * TODO 2_2:
-   * Validates if price <= 3 otherwise TooExpensive
+   * TODO 2_2: validate price
+   * => validatePrice should return a Right[Film] if price <= 3, Left[TooExpensive] otherwise
    */
   private def validatePrice(film: Film): Either[FailureReason, Film] =
     if (film.price <= 3) Right(film) else Left(TooExpensive)
 
   /*
-   * TODO 2_3:
+   * TODO 2_3: validate genre
+   * => validatePrice should return a Right[Film] if 'type' contains Crime, Left[BoringFilm] otherwise
    * Validates if 'type' contains Crime otherwise BoringFilm
    */
   def validateGenre(film: Film): Either[FailureReason, Film] =
     if (film.`type`.contains(Crime)) Right(film) else Left(BoringFilm)
 
   /*
-   * TODO 2:
-   * we validate error using a fail fast approach in a for-comprehension:
-   *
-   * validateReleaseDate -> validatePrice -> validateGenre
-   *
-   * Don't forget to call the 'right' function after each validation
+   * TODO 2: chaining validations with for-comprehension
+   * => validateFilm should return a Right[Film] if film passes all previous validations, Left[FailureReason] otherwise
+   * note: validate errors using a fail fast approach in a for-comprehension
+   * note: don't forget to call the 'right' function after each validation
    */
   def validateFilm(film: Film): Either[FailureReason, Film] =
     for {
@@ -111,7 +113,7 @@ object CatsXor {
   import cats.data.Xor
 
   /*
-   * Xor is catz alternative to scala's Either
+   * Xor is catz alternative to scala's Either (to learn more about Xor http://goo.gl/FTjwME)
    *
    * Where:
    *  - Xor.left, allows to represent the erroneous case
@@ -123,29 +125,31 @@ object CatsXor {
    */
 
   /*
-   * TODO 3_1: Validates if releaseYear <= 1980 otherwise NotOldEnough
+   * TODO 3_1: validate releaseYear
+   * => validateReleaseDate should return a Xor.right[Film] if releaseYear <= 1980, Xor.left[NotOldEnough] otherwise
    */
   private def validateReleaseDate(film: Film): Xor[FailureReason, Film] =
     if (film.releaseYear <= 1980) Xor.right(film) else Xor.left(NotOldEnough)
 
   /*
-   * TODO 3_2: Validates if price <= 3 otherwise TooExpensive
+   * TODO 3_2: validate price
+   * => validateReleaseDate should return a Xor.right[Film] if price <= 3, Xor.left[TooExpensive] otherwise
    */
   private def validatePrice(film: Film): FailureReason Xor Film =
     if (film.price <= 3) Xor.right(film) else Xor.left(TooExpensive)
 
   /*
-   * TODO 3_2: Validates if 'type' contains Crime otherwise BoringFilm
+   * TODO 3_2: validate genre
+   * => validateReleaseDate should return a Xor.right[Film] if 'type' contains Crime, Xor.left[BoringFilm] otherwise
    */
   def validateGenre(film: Film): FailureReason Xor Film =
     if (film.`type`.contains(Crime)) Xor.right(film) else Xor.left(BoringFilm)
 
   /*
-   * TODO 3: we validate error using a fail fast approach in a for-comprehension:
-   *
-   * validateReleaseDate -> validatePrice -> validateGenre
-   *
-   * Xor is right based, so there is no method 'right' to call after each validation
+   * TODO 3: validate film with for-comprehension
+   * => validateFilm should return an Xor with film if film passes all previous validations, Xor with failure otherwise
+   * note: validate errors using a fail fast approach in a for-comprehension
+   * note: Xor is right based, so there is no method 'right' to call after each validation
    */
   def validateFilm(film: Film): Xor[FailureReason, Film] =
     for {
