@@ -31,4 +31,17 @@ object FilmRepository {
   def findAll: Future[List[Film]] =
     Future.successful(films.values.toList)
 
+  def findRandomFilmByDirector(exclusion: String, genre: List[Genre])(implicit ex: ExecutionContext): Future[Option[Film]] = {
+    Future.successful(
+      films
+        .filter { case (id, film) => containsAny(film.`type`, genre) }
+        .filter { case (id, film) => film.name != exclusion }
+        .values
+        .headOption
+    )
+  }
+
+  private[xebia] def containsAny[A](base: List[A], searched: List[A]): Boolean =
+    searched.exists(base.contains)
+
 }
