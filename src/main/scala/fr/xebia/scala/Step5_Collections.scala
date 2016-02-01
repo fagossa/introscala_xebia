@@ -126,15 +126,8 @@ object Step5_Collections {
    * TODO 12: list initialization
    * => fillList should return a list containing given element n times
    */
-  def fillList[A](index: Int)(element: A): List[A] = {
-    @tailrec
-    def fillListRec(list: List[A], current: Int): List[A] = list match {
-      case head :: tail if index == 0 => Nil
-      case head :: tail if current < index => fillListRec(list ++ List(element), current + 1)
-      case head :: tail => list
-    }
-    fillListRec(List(element), 1)
-  }
+  def fillList[A](index: Int)(element: A): List[A] =
+    if (index <= 0) Nil else element :: fillList(index - 1)(element)
 
 }
 
