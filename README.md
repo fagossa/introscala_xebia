@@ -15,12 +15,6 @@ If you want to run only one test, just type this:
 
     > testOnly fr.xebia.scala.StepXXX
 
-# How to import an existing docker file?
-
-You can import the docker file like this:
-
-    cat introscala.tar | docker import - xebia/scala_exercises:latest
-
 -----
 
 # How the exercises are organized?
@@ -140,7 +134,7 @@ equivalent alternatives:
 
 ### Step 8 : Futures
 
-Scal's wrapper for futures operations
+Scala's wrapper for futures operations
 
     import concurrent.Future
     import concurrent.ExecutionContext.Implicits.global //default thread pool
