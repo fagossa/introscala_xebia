@@ -117,12 +117,9 @@ object Step5_Collections {
    * TODO 11: zip with index implementation
    * => zipWithIndex should return a list of tuple of A and Int containing every element from first with its index
    */
-  def zipWithIndex[A](first: List[A]): List[(A, Int)] = {
-    def zipWithIndexRec(first: List[A], n: Int): List[(A, Int)] = first match {
-      case Nil => Nil
-      case head :: tail => (head, n) :: zipWithIndexRec(tail, n + 1)
-    }
-    zipWithIndexRec(first, 0)
+  def zipWithIndex[A](first: List[A], index: Int = 0): List[(A, Int)] = first match {
+    case Nil => Nil
+    case head :: tail => (head, index) :: zipWithIndex(tail, index + 1)
   }
 
   /*
