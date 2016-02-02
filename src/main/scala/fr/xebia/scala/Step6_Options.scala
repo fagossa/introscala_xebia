@@ -117,7 +117,7 @@ object Step6_Options {
   /*
    * TODO 7: option computation again
    * => calculateTotalPriceWithIndex should return an Option containing a list of index and price * qty for each film
-   * note: use Step5_Collections#zip and CollectionTools#zipWithIndex to zip film with index and respective quantity together
+   * note: use Step5_Collections#zip and Step5_Collections#zipWithIndex to zip film with index and respective quantity together
    */
   def calculateTotalPriceWithIndex(films: List[Film], qty: List[Int]): Option[List[(Int, Double)]] =
     if (films.size == qty.size) {
