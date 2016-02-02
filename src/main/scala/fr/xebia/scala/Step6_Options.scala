@@ -48,7 +48,7 @@ object Step6_Options {
   /*
    * TODO 5: option flat map
    * => getBetterGenderFromUserId should return a gender Option for the user corresponding to the given id
-   * note: use Option#findById to retrieve the user
+   * note: use UserRepository#findById to retrieve the user
    */
   def getBetterGenderFromUserId(id: Int): Option[String] = ???
 
