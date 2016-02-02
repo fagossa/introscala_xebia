@@ -27,41 +27,48 @@ If you want to run only one test, just type this:
 
 Lets imagine that we have the following function
 
-    val sum: (Int, Int) => Int = _ + _
+```scala
+  val sum: (Int, Int) => Int = _ + _
     
-    val result sum(1, 2) // result should be 3
+  val result sum(1, 2) // result should be 3
+```
 
 But we split the parameters in order to reuse the first block. By using `curried` we can transform an existing 
 function into a `curried function`. So, by doing this
 
-    val sumCurried = sum.curried
-    val result = sumCurried(1)(2) // result should be 3
-
+```scala
+  val sumCurried = sum.curried
+  val result = sumCurried(1)(2) // result should be 3
+```
 
 ### Step 2, 3, 4 : Classes, Traits and Objects
 
 The following example show the relations beetween _classes_, _traits_ and _objects_
 
-    trait SomeLikeAnInterfaceAndAbstractClass {
-      def aSimpleOperation = println("I'm an implementation")
-    }
+```scala
+  trait SomeLikeAnInterfaceAndAbstractClass {
+    def aSimpleOperation = println("I'm an implementation")
+  }
     
-    trait anotherTrait {
-      def operation (param : Int) : Int
-    }
+  trait anotherTrait {
+    def operation (param : Int) : Int
+  }
     
-    class MyClassLikeInJava (value: Int) extends SomeLikeAnInterfaceAndAbstractClass with anotherTrait {
-      override def operation (param : Int) : Int = param * value
-    }
+  class MyClassLikeInJava (value: Int) extends SomeLikeAnInterfaceAndAbstractClass with anotherTrait {
+    override def operation (param : Int) : Int = param * value
+  }
     
-    object MySingletonInstance extends anotherTrait {
-      override def operation (param : Int) : Int = param * 2
-    }
+  object MySingletonInstance extends anotherTrait {
+    override def operation (param : Int) : Int = param * 2
+  }
+```
 
 You can use like this
 
-    new MyClassLikeInJava(2).operation(3) // should be 6
-    MySingletonInstance.operation(3) // should be 6
+```scala
+  new MyClassLikeInJava(2).operation(3) // should be 6
+  MySingletonInstance.operation(3) // should be 6
+```
 
 ## Intermediate level
 
@@ -71,11 +78,16 @@ You can use like this
 There are several ways to create list in scala.
 
 * We can call the constructor directly
-`val list = List(1, 2, 3)`
+
+```scala
+  val list = List(1, 2, 3)
+```
 
 * Or we can call the `::` function to chain the different elements 
-`val list = 1 :: 2 :: 3 :: Nil`
 
+```scala
+  val list = 1 :: 2 :: 3 :: Nil
+```
 
 #### How to traverse a list?
 
@@ -87,7 +99,7 @@ Traversing a list means we need to handle at least two special cases:
 
 The easiest way to handle those cases is by using a pattern matching on the list.
 
-
+```scala
     def sum(list: List[Int]): Int = list match {
       case Nil => 
         0 /* we arrived to the end of the list */
@@ -96,7 +108,7 @@ The easiest way to handle those cases is by using a pattern matching on the list
         /* get the value from 'head' and handle recursively the other cases */
         head + sum(tail) 
     }
-
+```
 
 ### Step 6 : Optionals
 
@@ -110,17 +122,20 @@ You can verify its value by the following means:
 
 #### Pattern matching: 
 
+```scala
     num2 match {
       case Some(actualValue) => println(actualValue)
       case None => println("No value")
     }
+```
 
 #### Getting a default value
 
+```scala
     val result1 = num2.getOrElse(0)
     val result2 = num2.get // may fail if value not present
     val result3 = num3.orElse(anotherOption).getOrElse(lastChanceValue)
-
+```
 
 ### Step 7 : Data Validation
 We included different examples that hopefully will help you to identify the advantages/disadvantages from the following
@@ -131,11 +146,11 @@ equivalent alternatives:
 - _Xor_ in Cats
 
 
-
 ### Step 8 : Futures
 
 Scala's wrapper for futures operations
 
+```scala
     import concurrent.Future
     import concurrent.ExecutionContext.Implicits.global //default thread pool
     
@@ -149,3 +164,4 @@ Scala's wrapper for futures operations
       case Failure(ex) =>
         println(s"Houston, we got a problem: ${ex.getMessage}")
     }
+```
