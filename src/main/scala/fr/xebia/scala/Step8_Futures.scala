@@ -13,7 +13,7 @@ object Step8_Futures {
   /*
    * TODO 1: future option
    * => getFilmNameById should return a future option name for the given film id
-   * not: use FilmRepository#findById to retrieve the film by its id
+   * note: use FilmRepository#findById to retrieve the film by its id
    */
   def getFilmNameById(id: Int)(implicit ex: ExecutionContext): Future[Option[String]] = ???
 
