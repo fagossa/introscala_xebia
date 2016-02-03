@@ -39,7 +39,7 @@ object ScalaOption {
   /*
    * TODO 1: chaining validations
    * => validateFilm should return a defined Option if film passes all previous validations, empty Option otherwise
-   * note: use Option#andThen to chain calls
+   * note: use Function1#andThen to chain calls
    */
   def validateFilm(film: Film): Option[Film] = ???
 
