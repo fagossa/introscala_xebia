@@ -35,7 +35,7 @@ object Step1_Basics {
 
   /*
    * functions can be returned like this:
-   *   def name(param: Type): Type => Type = (foo: Type): Type => foo
+   *   def name(param: Type): Type => Type = (foo: Type) => foo
    * TODO 5: functions as return
    * => product should return a function returning the product of its Int argument and the given x argument
    */
@@ -71,7 +71,7 @@ object Step1_Basics {
    * functions can have variable length arguments:
    *   def foo(x: Int*): Int = ???
    * TODO 8: variable length arguments
-   * => vararg should return sum of x variable length arguments
+   * => vararg should return sum of the values contained in x
    */
   def vararg(x: Int*): Int = ???
 
@@ -107,11 +107,11 @@ object Step1_Basics {
    *     someClose()
    *   }
    * TODO 11: exceptions
-   * => safeHandler should call given unsafe function and handle its exceptions
-   * => safeHandler should return exception's message suffixed with ":Finally"
-   * => when exception is of Type RuntimeException message should be prefixed with "Runtime:"
-   * note: that a nicer alternative is 'scala.util.Try'
+   * Accumulate the result of each step in the exception handling mechanism using
+   * a 'var'. However, it is important to note that:
+   *  - immutable it is preferable most of the time
+   *  - there is a nicer alternative called 'scala.util.Try'
    */
-  def safeHandler(unsafe: () => Unit): String = ???
+  def safeHandler(unsafe: () => String): String = ???
 
 }
