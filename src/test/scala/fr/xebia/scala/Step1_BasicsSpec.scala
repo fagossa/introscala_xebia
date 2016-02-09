@@ -93,8 +93,10 @@ class Step1_BasicsSpec extends FunSpec with Matchers {
       val random = UUID.randomUUID().toString
       val unsafeRuntimeException = () => throw new RuntimeException("bad runtime exception:" + random)
       val unsafeException = () => throw new Exception("bad checked exception:" + random)
+      val safeCall = () => random
       Step1_Basics.safeHandler(unsafeRuntimeException).shouldBe("Runtime:" + "bad runtime exception:" + random + ":Finally")
       Step1_Basics.safeHandler(unsafeException).shouldBe("bad checked exception:" + random + ":Finally")
+      Step1_Basics.safeHandler(safeCall).shouldBe(random + ":Finally")
     }
 
   }

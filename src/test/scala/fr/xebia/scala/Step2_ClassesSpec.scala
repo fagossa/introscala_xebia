@@ -49,6 +49,7 @@ class Step2_ClassesSpec extends FunSpec with Matchers {
       Step2_Classes.fidelity(new Item("BeerB", 0)).shouldBe(1)
       Step2_Classes.fidelity(new Item("Hot Chocolate", 0)).shouldBe(0)
       Step2_Classes.fidelity(new Item("Hot Chocolate", 5)).shouldBe(0)
+      Step2_Classes.fidelity(new Item("Ber", 6)).shouldBe(0)
     }
 
   }
